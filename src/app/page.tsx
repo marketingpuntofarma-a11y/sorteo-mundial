@@ -46,18 +46,17 @@ export default function Home() {
       {/* Background decoration */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
         <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] rounded-full bg-purple-600/20 blur-[120px]"></div>
-        <div className="absolute bottom-[10%] -right-[10%] w-[50%] h-[50%] rounded-full bg-indigo-600/20 blur-[120px]"></div>
-      </div>
-
-      <div className="relative z-10 w-full max-w-xl">
+        <div className="max-w-xl w-full bg-white/10 backdrop-blur-2xl p-8 md:p-12 rounded-[40px] border border-white/20 shadow-2xl relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
+        
         <div className="text-center mb-10">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 mb-6 shadow-2xl">
-            <Ticket className="w-10 h-10 text-purple-300" />
+          <div className="inline-block p-4 bg-white rounded-full mb-6 shadow-xl">
+             <img src="https://www.puntofarma.com.py/images/logo.png" alt="PuntoFarma" className="h-12 w-auto" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-300 to-indigo-300">
-            Gran Sorteo PFM
+          <h1 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight drop-shadow-lg">
+            Gran Sorteo <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Mundial PFM</span>
           </h1>
-          <p className="text-purple-200/80 text-lg">Registrá tu ticket y sumá chances para ganar</p>
+          <p className="text-xl text-white/80 font-medium">Registrá tu ticket y sumá chances para ganar</p>
         </div>
 
         <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-8 rounded-3xl shadow-2xl">
@@ -99,63 +98,53 @@ export default function Home() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-purple-200 ml-1">DNI</label>
-                <div className="relative">
-                  <CreditCard className="absolute left-4 top-3.5 w-5 h-5 text-white/40" />
-                  <input required name="dni" type="text" className="w-full bg-black/20 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" placeholder="Sin puntos ni espacios" />
+                <label className="text-sm font-semibold text-white/70 ml-2">DNI (Sin puntos ni espacios)</label>
+                <div className="relative group">
+                  <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-blue-400 transition-colors" />
+                  <input type="text" placeholder="Ej: 1234567" className="w-full bg-white/5 border border-white/10 rounded-2xl px-12 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-white/20" value={formData.dni} onChange={(e) => setFormData({...formData, dni: e.target.value.replace(/\D/g, '')})} required />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-purple-200 ml-1">Email</label>
-                  <div className="relative">
-                    <Mail className="absolute left-4 top-3.5 w-5 h-5 text-white/40" />
-                    <input required name="email" type="email" className="w-full bg-black/20 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" placeholder="tu@email.com" />
+                  <label className="text-sm font-semibold text-white/70 ml-2">Email</label>
+                  <div className="relative group">
+                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-blue-400 transition-colors" />
+                    <input type="email" placeholder="tu@email.com" className="w-full bg-white/5 border border-white/10 rounded-2xl px-12 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-white/20" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} required />
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-purple-200 ml-1">Teléfono</label>
-                  <div className="relative">
-                    <Phone className="absolute left-4 top-3.5 w-5 h-5 text-white/40" />
-                    <input required name="phone" type="tel" className="w-full bg-black/20 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" placeholder="Código de área + número" />
+                  <label className="text-sm font-semibold text-white/70 ml-2">Teléfono</label>
+                  <div className="relative group">
+                    <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-blue-400 transition-colors" />
+                    <input type="tel" placeholder="Ej: 0981123456" className="w-full bg-white/5 border border-white/10 rounded-2xl px-12 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-white/20" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} required />
                   </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-4 mt-4 border-t border-white/10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-purple-200 ml-1">Número de Ticket</label>
-                  <div className="relative">
-                    <Ticket className="absolute left-4 top-3.5 w-5 h-5 text-purple-300" />
-                    <input required name="ticket" type="text" className="w-full bg-purple-500/10 border border-purple-500/30 rounded-xl py-3 pl-12 pr-4 text-white placeholder-purple-200/50 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:bg-purple-500/20 transition-all font-mono" placeholder="N° Ticket" />
+                  <label className="text-sm font-semibold text-white/70 ml-2">Número de Ticket (XXXX-XXXXXXXX)</label>
+                  <div className="relative group">
+                    <Ticket className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-blue-400 transition-colors" />
+                    <input type="text" placeholder="0001-00793301" pattern="\d{4}-\d{8}" title="Formato: XXXX-XXXXXXXX" className="w-full bg-white/5 border border-white/10 rounded-2xl px-12 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-white/20" value={formData.ticket} onChange={(e) => setFormData({...formData, ticket: e.target.value})} required />
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-purple-200 ml-1">Sucursal</label>
-                  <div className="relative">
-                    <MapPin className="absolute left-4 top-3.5 w-5 h-5 text-white/40" />
-                    <select required name="branch" className="w-full bg-black/20 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 appearance-none">
-                      <option value="" className="text-black">Seleccionar Sucursal</option>
-                      <option value="Sucursal Centro" className="text-black">Sucursal Centro</option>
-                      <option value="Sucursal Norte" className="text-black">Sucursal Norte</option>
-                      <option value="Sucursal Sur" className="text-black">Sucursal Sur</option>
-                      <option value="Sucursal Este" className="text-black">Sucursal Este</option>
+                  <label className="text-sm font-semibold text-white/70 ml-2">Sucursal</label>
+                  <div className="relative group">
+                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-blue-400 transition-colors" />
+                    <select className="w-full bg-white/5 border border-white/10 rounded-2xl px-12 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all appearance-none" value={formData.branch} onChange={(e) => setFormData({...formData, branch: e.target.value})} required>
+                      <option value="" className="bg-slate-800">Seleccionar Sucursal</option>
+                      <option value="Sucursal Central" className="bg-slate-800">Sucursal Central</option>
+                      <option value="Sucursal Norte" className="bg-slate-800">Sucursal Norte</option>
+                      <option value="Sucursal Sur" className="bg-slate-800">Sucursal Sur</option>
+                      <option value="Sucursal Este" className="bg-slate-800">Sucursal Este</option>
                     </select>
                   </div>
                 </div>
               </div>
 
-              {error && (
-                <div className="bg-red-500/20 border border-red-500/50 text-red-200 px-4 py-3 rounded-xl text-sm">
-                  {error}
-                </div>
-              )}
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full mt-6 bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-400 hover:to-indigo-400 text-white font-bold py-4 px-8 rounded-xl transition-all transform active:scale-[0.98] shadow-[0_0_20px_rgba(168,85,247,0.4)] disabled:opacity-70 disabled:cursor-not-allowed flex justify-center items-center"
               >
                 {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : 'Registrar Ticket'}
               </button>
