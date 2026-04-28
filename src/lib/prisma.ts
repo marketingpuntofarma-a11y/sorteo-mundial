@@ -5,7 +5,9 @@ const globalForPrisma = globalThis as unknown as { prisma: PrismaClient | undefi
 export const getPrisma = () => {
   if (globalForPrisma.prisma) return globalForPrisma.prisma
   
-  const prisma = new PrismaClient()
+  const prisma = new PrismaClient({
+    log: ['error', 'warn'],
+  })
   if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
   return prisma
 }
