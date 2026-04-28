@@ -1,17 +1,17 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import sql from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
-    const allParticipants = await prisma.participant.findMany();
+    const allParticipants = await sql`SELECT * FROM "Participant"`;
 
     if (allParticipants.length === 0) {
       return NextResponse.json({ error: 'No hay participantes registrados.' }, { status: 400 });
     }
 
-    const chancesMap = new Map<string, typeof allParticipants[0]>();
+    const chancesMap = new Map<string, any>();
     const loteria: string[] = [];
 
     for (const p of allParticipants) {

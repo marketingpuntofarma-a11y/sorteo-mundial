@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import sql from '@/lib/db';
 import { cookies } from 'next/headers';
 
 async function checkAuth() {
@@ -14,9 +14,9 @@ export async function GET() {
   }
 
   try {
-    const participants = await prisma.participant.findMany({
-      orderBy: { createdAt: 'desc' },
-    });
+    const participants = await sql`
+      SELECT * FROM "Participant" ORDER BY "createdAt" DESC
+    `;
     return NextResponse.json(participants);
   } catch (error) {
     return NextResponse.json({ error: 'Error al obtener participantes' }, { status: 500 });
@@ -30,9 +30,9 @@ export async function DELETE(request: Request) {
 
   try {
     const { id } = await request.json();
-    await prisma.participant.delete({
-      where: { id: Number(id) },
-    });
+    await sql`
+      DELETE FROM "Participant" WHERE id = ${Number(id)}
+    `;
     return NextResponse.json({ success: true });
   } catch (error) {
     return NextResponse.json({ error: 'Error al eliminar registro' }, { status: 500 });
