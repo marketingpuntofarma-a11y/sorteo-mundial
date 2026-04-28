@@ -92,7 +92,7 @@ export default function Home() {
           
           <div className="text-center mb-10">
             <div className="inline-block p-4 bg-white rounded-full mb-6 shadow-xl w-24 h-24 flex items-center justify-center">
-               <img src="https://logodownload.org/wp-content/uploads/2022/04/punto-farma-logo.png" alt="PuntoFarma" className="w-20 h-auto" />
+               <img src="/logo.png" alt="PuntoFarma" className="w-20 h-auto" />
             </div>
             <h1 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight drop-shadow-lg">
               Gran Sorteo <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Mundial PFM</span>
