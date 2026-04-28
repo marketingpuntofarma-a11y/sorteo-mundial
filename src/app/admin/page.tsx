@@ -143,6 +143,7 @@ export default function AdminPage() {
                   <th className="px-6 py-5 font-semibold">Participante</th>
                   <th className="px-6 py-5 font-semibold">DNI / Email</th>
                   <th className="px-6 py-5 font-semibold">Ticket / Sucursal</th>
+                  <th className="px-6 py-5 font-semibold text-right">Importe</th>
                   <th className="px-6 py-5 font-semibold">Fecha Reg.</th>
                   <th className="px-6 py-5 font-semibold text-center">Acciones</th>
                 </tr>
@@ -164,6 +165,9 @@ export default function AdminPage() {
                       </span>
                       <div className="text-sm text-white/50 mt-1">{p.branch}</div>
                     </td>
+                    <td className="px-6 py-5 text-right font-mono text-green-400 font-bold">
+                      {p.amount ? `GS ${p.amount}` : '-'}
+                    </td>
                     <td className="px-6 py-5 text-white/60">
                       {new Date(p.createdAt).toLocaleDateString()}
                     </td>
@@ -180,7 +184,7 @@ export default function AdminPage() {
                 ))}
                 {participants.length === 0 && !loading && (
                   <tr>
-                    <td colSpan={5} className="px-6 py-20 text-center text-white/40">
+                    <td colSpan={6} className="px-6 py-20 text-center text-white/40">
                       No hay registros todavía.
                     </td>
                   </tr>
