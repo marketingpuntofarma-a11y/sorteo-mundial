@@ -166,8 +166,9 @@ export default function Home() {
                         type="tel" 
                         value={phoneValue}
                         onChange={handlePhoneChange}
-                        placeholder="Número local" 
-                        className="w-full bg-white/5 border border-white/10 rounded-2xl pl-24 pr-6 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-white/10" 
+                        placeholder="" 
+                        autoComplete="off"
+                        className="w-full bg-white/5 border border-white/10 rounded-2xl pl-24 pr-6 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all" 
                       />
                     </div>
                   </div>
