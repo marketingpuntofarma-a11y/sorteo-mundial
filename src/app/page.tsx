@@ -9,6 +9,16 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [chances, setChances] = useState<number>(0);
 
+  const [ticketValue, setTicketValue] = useState('');
+
+  const handleTicketChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length > 4) {
+      value = value.slice(0, 4) + '-' + value.slice(4, 12);
+    }
+    setTicketValue(value);
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
@@ -32,6 +42,7 @@ export default function Home() {
       } else {
         setSuccess('¡Registro exitoso! Recibirás un correo de confirmación.');
         setChances(result.chances);
+        setTicketValue('');
         (e.target as HTMLFormElement).reset();
       }
     } catch (err) {
@@ -134,6 +145,9 @@ export default function Home() {
                       required 
                       name="ticket" 
                       type="text" 
+                      value={ticketValue}
+                      onChange={handleTicketChange}
+                      maxLength={13}
                       placeholder="0001-00793301" 
                       pattern="[0-9]{4}-[0-9]{8}"
                       title="Formato requerido: 4 números, guión y 8 números"
