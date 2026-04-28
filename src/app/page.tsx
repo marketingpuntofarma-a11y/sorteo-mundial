@@ -20,7 +20,7 @@ export default function Home() {
   };
 
   const [amountValue, setAmountValue] = useState('');
-  const [phoneValue, setPhoneValue] = useState('011');
+  const [phoneValue, setPhoneValue] = useState('');
 
   const formatNumber = (val: string) => {
     let value = val.replace(/[^\d,]/g, '');
