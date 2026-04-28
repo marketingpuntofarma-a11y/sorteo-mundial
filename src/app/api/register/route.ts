@@ -9,10 +9,17 @@ export const dynamic = 'force-dynamic';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, surname, dni, email, phone, ticket, branch } = body;
+    const { name, surname, dni, email, phone, ticket, branch, amount } = body;
 
     if (!name || !surname || !dni || !email || !phone || !ticket || !branch) {
       return NextResponse.json({ error: 'Faltan datos requeridos' }, { status: 400 });
+    }
+
+    // Migración automática (por si acaso no se corrió localmente)
+    try {
+      await sql`ALTER TABLE "Participant" ADD COLUMN IF NOT EXISTS "amount" TEXT`;
+    } catch (e) {
+      console.log('Columna amount ya existe o error silencioso');
     }
 
     // Verificar si ya existe el ticket en esa sucursal
@@ -31,8 +38,8 @@ export async function POST(request: Request) {
 
     // Insertar el nuevo participante
     const [participant] = await sql`
-      INSERT INTO "Participant" (name, surname, dni, email, phone, ticket, branch, "createdAt")
-      VALUES (${name}, ${surname}, ${dni}, ${email}, ${phone}, ${ticket}, ${branch}, NOW())
+      INSERT INTO "Participant" (name, surname, dni, email, phone, ticket, branch, amount, "createdAt")
+      VALUES (${name}, ${surname}, ${dni}, ${email}, ${phone}, ${ticket}, ${branch}, ${amount || ''}, NOW())
       RETURNING *
     `;
 

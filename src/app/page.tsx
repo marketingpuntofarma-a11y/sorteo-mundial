@@ -13,7 +13,7 @@ export default function Home() {
 
   const handleTicketChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.replace(/\D/g, '');
-    if (value.length > 4) {
+    if (value.length >= 4) {
       value = value.slice(0, 4) + '-' + value.slice(4, 12);
     }
     setTicketValue(value);
@@ -171,6 +171,14 @@ export default function Home() {
                       <option value="Sucursal Este" className="bg-slate-900">Sucursal Este</option>
                     </select>
                   </div>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-white/70 ml-2">Importe del Ticket (GS)</label>
+                <div className="relative group">
+                  <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-blue-400 transition-colors" />
+                  <input required name="amount" type="text" placeholder="Ej: 150.000" className="w-full bg-white/5 border border-white/10 rounded-2xl px-12 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-white/20" />
                 </div>
               </div>
 
