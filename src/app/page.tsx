@@ -36,10 +36,7 @@ export default function Home() {
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value;
-    if (!value.startsWith('011')) {
-      value = '011' + value.replace(/\D/g, '');
-    }
+    const value = e.target.value.replace(/\D/g, '');
     setPhoneValue(value);
   };
 
@@ -51,6 +48,9 @@ export default function Home() {
 
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
+    
+    // Prepender el prefijo 011 al teléfono
+    data.phone = `011${phoneValue}`;
 
     try {
       const res = await fetch('/api/register', {
@@ -68,7 +68,7 @@ export default function Home() {
         setChances(result.chances);
         setTicketValue('');
         setAmountValue('');
-        setPhoneValue('011');
+        setPhoneValue('');
         (e.target as HTMLFormElement).reset();
       }
     } catch (err) {
@@ -155,18 +155,21 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-white/70 ml-2">Teléfono *</label>
+                  <label className="text-sm font-semibold text-blue-200/60 ml-2">Teléfono *</label>
                   <div className="relative group">
-                    <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-blue-400 transition-colors" />
-                    <input 
-                      required 
-                      name="phone" 
-                      type="tel" 
-                      value={phoneValue}
-                      onChange={handlePhoneChange}
-                      placeholder="Ej: 011 1234567" 
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-12 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-white/20" 
-                    />
+                    <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-blue-400 transition-colors z-10" />
+                    <div className="relative flex items-center">
+                      <span className="absolute left-12 text-blue-400 font-bold border-r border-white/10 pr-3 mr-3 h-6 flex items-center">011</span>
+                      <input 
+                        required 
+                        name="phone_display" 
+                        type="tel" 
+                        value={phoneValue}
+                        onChange={handlePhoneChange}
+                        placeholder="1234567" 
+                        className="w-full bg-white/5 border border-white/10 rounded-2xl pl-24 pr-6 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-white/10" 
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
