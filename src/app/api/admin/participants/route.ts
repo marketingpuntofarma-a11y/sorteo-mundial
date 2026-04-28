@@ -14,12 +14,15 @@ export async function GET() {
   }
 
   try {
+    console.log('Intentando obtener participantes...');
     const participants = await sql`
       SELECT * FROM "Participant" ORDER BY "createdAt" DESC
     `;
+    console.log('Participantes obtenidos:', participants.length);
     return NextResponse.json(participants);
-  } catch (error) {
-    return NextResponse.json({ error: 'Error al obtener participantes' }, { status: 500 });
+  } catch (error: any) {
+    console.error('ERROR CRITICO ADMIN:', error);
+    return NextResponse.json({ error: 'Error al obtener participantes', details: error.message }, { status: 500 });
   }
 }
 
