@@ -20,6 +20,7 @@ export default function Home() {
   };
 
   const [amountValue, setAmountValue] = useState('');
+  const [phoneValue, setPhoneValue] = useState('011');
 
   const formatNumber = (val: string) => {
     let value = val.replace(/[^\d,]/g, '');
@@ -32,6 +33,14 @@ export default function Home() {
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAmountValue(formatNumber(e.target.value));
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value;
+    if (!value.startsWith('011')) {
+      value = '011' + value.replace(/\D/g, '');
+    }
+    setPhoneValue(value);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -59,6 +68,7 @@ export default function Home() {
         setChances(result.chances);
         setTicketValue('');
         setAmountValue('');
+        setPhoneValue('011');
         (e.target as HTMLFormElement).reset();
       }
     } catch (err) {
@@ -144,10 +154,18 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-white/70 ml-2">Teléfono</label>
+                  <label className="text-sm font-semibold text-white/70 ml-2">Teléfono *</label>
                   <div className="relative group">
                     <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-blue-400 transition-colors" />
-                    <input required name="phone" type="tel" placeholder="Ej: 0981123456" className="w-full bg-white/5 border border-white/10 rounded-2xl px-12 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-white/20" />
+                    <input 
+                      required 
+                      name="phone" 
+                      type="tel" 
+                      value={phoneValue}
+                      onChange={handlePhoneChange}
+                      placeholder="Ej: 011 1234567" 
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-12 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-white/20" 
+                    />
                   </div>
                 </div>
               </div>
