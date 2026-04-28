@@ -1,0 +1,21 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Participant {
+  id        Int      @id @default(autoincrement())
+  name      String
+  surname   String
+  dni       String
+  email     String
+  phone     String
+  ticket    String
+  branch    String
+  createdAt DateTime @default(now())
+
+  @@unique([ticket, branch])
+}
