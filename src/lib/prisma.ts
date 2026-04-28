@@ -6,15 +6,8 @@ export const getPrisma = () => {
   if (globalForPrisma.prisma) return globalForPrisma.prisma
   
   const prisma = new PrismaClient({
-    __internal: {
-      useUds: false
-    },
-    datasources: {
-      db: {
-        url: process.env["POSTGRES_PRISMA_URL"] || process.env["DATABASE_URL"]
-      }
-    }
-  } as any)
+    errorFormat: 'pretty',
+  })
   if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
   return prisma
 }
