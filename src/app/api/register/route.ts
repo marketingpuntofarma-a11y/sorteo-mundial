@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import sql from '@/lib/db';
 import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY || 're_123456789');
@@ -15,29 +15,32 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Faltan datos requeridos' }, { status: 400 });
     }
 
-    const existing = await prisma.participant.findUnique({
-      where: {
-        ticket_branch: {
-          ticket,
-          branch,
-        },
-      },
-    });
+    // Verificar si ya existe el ticket en esa sucursal
+    const existing = await sql`
+      SELECT id FROM "Participant" 
+      WHERE ticket = ${ticket} AND branch = ${branch} 
+      LIMIT 1
+    `;
 
-    if (existing) {
+    if (existing.length > 0) {
       return NextResponse.json(
         { error: 'Este ticket ya fue registrado en esta sucursal.' },
         { status: 400 }
       );
     }
 
-    const participant = await prisma.participant.create({
-      data: { name, surname, dni, email, phone, ticket, branch },
-    });
+    // Insertar el nuevo participante
+    const [participant] = await sql`
+      INSERT INTO "Participant" (name, surname, dni, email, phone, ticket, branch, "createdAt")
+      VALUES (${name}, ${surname}, ${dni}, ${email}, ${phone}, ${ticket}, ${branch}, NOW())
+      RETURNING *
+    `;
 
-    const chances = await prisma.participant.count({
-      where: { dni },
-    });
+    // Contar chances (DNI)
+    const resultCount = await sql`
+      SELECT count(*) FROM "Participant" WHERE dni = ${dni}
+    `;
+    const chances = resultCount[0].count;
 
     if (process.env.RESEND_API_KEY) {
       try {
@@ -62,12 +65,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true, participant, chances });
   } catch (error: any) {
     console.error('Error en el registro:', error);
-    
-    // Devolvemos pistas sobre el error para poder arreglarlo
-    let message = 'Error interno del servidor';
-    if (error?.message?.includes('Prisma')) message = 'Error de Base de Datos (Prisma)';
-    if (error?.code === 'P2002') message = 'Este ticket ya existe.';
-    
-    return NextResponse.json({ error: message, details: error.message }, { status: 500 });
+    return NextResponse.json({ error: 'Error de conexión a la base de datos', details: error.message }, { status: 500 });
   }
 }
