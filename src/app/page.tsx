@@ -54,8 +54,8 @@ export default function Home() {
           <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
           
           <div className="text-center mb-10">
-            <div className="inline-block p-4 bg-white rounded-full mb-6 shadow-xl">
-               <img src="https://www.puntofarma.com.py/images/logo.png" alt="PuntoFarma" className="h-12 w-auto" />
+            <div className="inline-block p-4 bg-white rounded-full mb-6 shadow-xl w-24 h-24 flex items-center justify-center">
+               <img src="https://logodownload.org/wp-content/uploads/2022/04/punto-farma-logo.png" alt="PuntoFarma" className="w-20 h-auto" />
             </div>
             <h1 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight drop-shadow-lg">
               Gran Sorteo <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Mundial PFM</span>
@@ -161,8 +161,8 @@ export default function Home() {
               </div>
 
               {error && (
-                <div className="bg-red-500/20 border border-red-500/50 text-red-200 px-6 py-4 rounded-2xl text-center text-sm font-bold">
-                  {error}
+                <div className="bg-red-500/20 border border-red-500/50 text-red-200 px-6 py-4 rounded-2xl text-center text-sm">
+                  <p className="font-bold">{error}</p>
                 </div>
               )}
 

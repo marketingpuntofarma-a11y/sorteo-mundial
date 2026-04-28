@@ -60,8 +60,14 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({ success: true, participant, chances });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error en el registro:', error);
-    return NextResponse.json({ error: 'Error interno del servidor' }, { status: 500 });
+    
+    // Devolvemos pistas sobre el error para poder arreglarlo
+    let message = 'Error interno del servidor';
+    if (error?.message?.includes('Prisma')) message = 'Error de Base de Datos (Prisma)';
+    if (error?.code === 'P2002') message = 'Este ticket ya existe.';
+    
+    return NextResponse.json({ error: message, details: error.message }, { status: 500 });
   }
 }
