@@ -79,25 +79,26 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-[#004a80] via-[#0072bc] to-[#004a80] flex items-center justify-center p-4 sm:p-8 text-white relative overflow-hidden">
-      {/* Background decoration */}
+    <main className="min-h-screen bg-[#020617] flex items-center justify-center p-4 sm:p-8 text-white relative overflow-hidden">
+      {/* Dynamic Background Elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
-        <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] rounded-full bg-white/10 blur-[120px]"></div>
-        <div className="absolute bottom-[10%] -right-[10%] w-[50%] h-[50%] rounded-full bg-blue-400/10 blur-[120px]"></div>
+        <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] rounded-full bg-blue-600/10 blur-[150px]"></div>
+        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#0072bc]/10 blur-[150px]"></div>
       </div>
 
       <div className="relative z-10 w-full max-w-xl">
-        <div className="bg-white/10 backdrop-blur-2xl p-8 md:p-12 rounded-[40px] border border-white/20 shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-300 via-white to-blue-300"></div>
+        <div className="bg-slate-900/80 backdrop-blur-3xl p-8 md:p-12 rounded-[48px] border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50"></div>
           
           <div className="text-center mb-10">
-            <div className="inline-block p-1 bg-white rounded-full mb-6 shadow-2xl w-28 h-28 flex items-center justify-center overflow-hidden border-4 border-blue-400/20">
-               <img src="/logo.png" alt="PuntoFarma" className="w-full h-full object-contain p-2" />
+            <div className="inline-block bg-white rounded-full mb-6 shadow-[0_0_30px_rgba(255,255,255,0.2)] w-28 h-28 flex items-center justify-center overflow-hidden border-4 border-blue-500/30">
+               <img src="/logo.png" alt="PuntoFarma" className="w-full h-full object-cover" />
             </div>
-            <h1 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight drop-shadow-lg">
-              Gran Sorteo <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-100 to-white">Mundial PFM</span>
+            <h1 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tighter uppercase italic">
+              Gran Sorteo <br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-b from-blue-400 to-blue-600">Mundial PFM</span>
             </h1>
-            <p className="text-xl text-blue-100/90 font-medium">Registrá tu ticket y sumá chances para ganar</p>
+            <p className="text-lg text-blue-200/60 font-medium tracking-wide">REGISTRÁ TU TICKET Y GANÁ</p>
           </div>
 
           {success ? (
