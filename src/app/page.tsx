@@ -212,7 +212,7 @@ export default function Home() {
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-semibold text-white/50 ml-2">Importe (GS) *</label>
+                <label className="text-xs font-semibold text-white/50 ml-2">Importe (Pesos Argentinos $) *</label>
                 <div className="relative group">
                   <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-blue-400 transition-colors" />
                   <input 

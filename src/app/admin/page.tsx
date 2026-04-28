@@ -166,7 +166,7 @@ export default function AdminPage() {
                       <div className="text-sm text-white/50 mt-1">{p.branch}</div>
                     </td>
                     <td className="px-6 py-5 text-right font-mono text-green-400 font-bold">
-                      {p.amount ? `GS ${p.amount}` : '-'}
+                      {p.amount ? `$ ${p.amount}` : '-'}
                     </td>
                     <td className="px-6 py-5 text-white/60">
                       {new Date(p.createdAt).toLocaleDateString()}
