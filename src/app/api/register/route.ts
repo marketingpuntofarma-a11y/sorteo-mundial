@@ -36,18 +36,29 @@ export async function POST(request: Request) {
       );
     }
 
+    // Limpiar el importe para el cálculo (quitar puntos, cambiar coma por punto)
+    const cleanAmount = parseFloat(amount.replace(/\./g, '').replace(',', '.'));
+    const currentTicketChances = Math.floor(cleanAmount / 50000);
+
     // Insertar el nuevo participante
     const [participant] = await sql`
       INSERT INTO "Participant" (name, surname, dni, email, phone, ticket, branch, amount, "createdAt")
-      VALUES (${name}, ${surname}, ${dni}, ${email}, ${phone}, ${ticket}, ${branch}, ${amount || ''}, NOW())
+      VALUES (${name}, ${surname}, ${dni}, ${email}, ${phone}, ${ticket}, ${branch}, ${amount}, NOW())
       RETURNING *
     `;
 
-    // Contar chances (DNI)
-    const resultCount = await sql`
-      SELECT count(*) FROM "Participant" WHERE dni = ${dni}
+    // Calcular chances totales (suma de chances de todos sus tickets)
+    const allUserTickets = await sql`
+      SELECT amount FROM "Participant" WHERE dni = ${dni}
     `;
-    const chances = resultCount[0].count;
+    
+    let totalChances = 0;
+    allUserTickets.forEach(t => {
+      const amt = parseFloat(t.amount.replace(/\./g, '').replace(',', '.'));
+      totalChances += Math.floor(amt / 50000);
+    });
+
+    const chances = totalChances;
 
     if (process.env.RESEND_API_KEY) {
       try {

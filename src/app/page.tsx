@@ -22,8 +22,12 @@ export default function Home() {
   const [amountValue, setAmountValue] = useState('');
 
   const formatNumber = (val: string) => {
-    const num = val.replace(/\D/g, '');
-    return num.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    let value = val.replace(/[^\d,]/g, '');
+    const parts = value.split(',');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    if (parts.length > 2) value = parts[0] + ',' + parts[1];
+    else value = parts.join(',');
+    return value;
   };
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
