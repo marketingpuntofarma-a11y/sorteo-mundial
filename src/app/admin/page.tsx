@@ -143,8 +143,9 @@ export default function AdminPage() {
                   <th className="px-6 py-5 font-semibold">Participante</th>
                   <th className="px-6 py-5 font-semibold">DNI / Email</th>
                   <th className="px-6 py-5 font-semibold">Ticket / Sucursal</th>
-                  <th className="px-6 py-5 font-semibold text-right">Importe</th>
-                  <th className="px-6 py-5 font-semibold">Fecha Reg.</th>
+                  <th className="px-6 py-4 text-right text-xs font-bold text-white/40 uppercase tracking-widest">Importe</th>
+                  <th className="px-6 py-4 text-center text-xs font-bold text-white/40 uppercase tracking-widest">Chances</th>
+                  <th className="px-6 py-4 text-center text-xs font-bold text-white/40 uppercase tracking-widest">Fecha Reg.</th>
                   <th className="px-6 py-5 font-semibold text-center">Acciones</th>
                 </tr>
               </thead>
@@ -168,7 +169,12 @@ export default function AdminPage() {
                     <td className="px-6 py-5 text-right font-mono text-green-400 font-bold">
                       {p.amount ? `$ ${p.amount}` : '-'}
                     </td>
-                    <td className="px-6 py-5 text-white/60">
+                    <td className="px-6 py-5 text-center">
+                      <span className="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-sm font-black border border-blue-500/30 shadow-[0_0_10px_rgba(59,130,246,0.2)]">
+                        {p.amount ? Math.floor(parseFloat(p.amount.replace(/\./g, '').replace(',', '.')) / 50000) : 0}
+                      </span>
+                    </td>
+                    <td className="px-6 py-5 text-center text-white/60">
                       {new Date(p.createdAt).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-5 text-center">
