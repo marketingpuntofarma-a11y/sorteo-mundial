@@ -112,7 +112,7 @@ export default function Home() {
                 <div className="absolute inset-0 bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <p className="text-sm text-blue-300 uppercase tracking-[0.2em] mb-3 font-black">Chances acumuladas</p>
                 <p className="text-7xl font-black text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">{chances}</p>
-                <p className="mt-4 text-[10px] text-blue-300/50 uppercase tracking-widest italic">
+                <p className="mt-4 text-xs text-blue-100/80 uppercase tracking-widest font-bold italic">
                   Tkt sujeto a revisión (recuerde guardar el tkt)
                 </p>
               </div>
