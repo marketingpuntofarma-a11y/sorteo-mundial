@@ -1,8 +1,16 @@
 import { NextResponse } from 'next/server';
 import sql from '@/lib/db';
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 
-const resend = new Resend(process.env.RESEND_API_KEY || 're_123456789');
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST,
+  port: parseInt(process.env.SMTP_PORT || '587'),
+  secure: process.env.SMTP_SECURE === 'true',
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+});
 
 export const dynamic = 'force-dynamic';
 
@@ -60,23 +68,43 @@ export async function POST(request: Request) {
 
     const chances = totalChances;
 
-    if (process.env.RESEND_API_KEY) {
+    // Enviar Email vía SMTP si están las credenciales
+    if (process.env.SMTP_USER && process.env.SMTP_PASS) {
       try {
-        await resend.emails.send({
-          from: 'Sorteo PFM <onboarding@resend.dev>',
+        await transporter.sendMail({
+          from: `"Sorteo Mundial PFM" <${process.env.SMTP_FROM || process.env.SMTP_USER}>`,
           to: email,
-          subject: 'Registro exitoso para el sorteo!',
+          subject: '¡Registro Exitoso - Sorteo Mundial PFM!',
           html: `
-            <div style="font-family: sans-serif; padding: 20px;">
-              <h2>Hola ${name} ${surname}!</h2>
-              <p>Tu registro con el ticket <strong>${ticket}</strong> de la sucursal <strong>${branch}</strong> ha sido confirmado.</p>
-              <p>Hasta el momento, tienes <strong>${chances} chance(s)</strong> de ganar en el sorteo (basado en tu DNI: ${dni}).</p>
-              <p>¡Mucha suerte!</p>
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #1e293b; line-height: 1.6;">
+              <div style="text-align: center; margin-bottom: 30px;">
+                <h1 style="color: #2563eb; margin-bottom: 10px;">¡Hola ${name}!</h1>
+                <p style="font-size: 18px; font-weight: bold;">Tu ticket ha sido registrado correctamente.</p>
+              </div>
+              
+              <div style="background-color: #f8fafc; border-radius: 16px; padding: 25px; border: 1px solid #e2e8f0; margin-bottom: 30px;">
+                <h2 style="font-size: 14px; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0;">Detalles del Registro</h2>
+                <ul style="list-style: none; padding: 0;">
+                  <li style="margin-bottom: 10px;"><strong>N° de Ticket:</strong> ${ticket}</li>
+                  <li style="margin-bottom: 10px;"><strong>Sucursal:</strong> ${branch}</li>
+                  <li style="margin-bottom: 10px;"><strong>Importe:</strong> $ ${amount}</li>
+                </ul>
+                
+                <div style="margin-top: 20px; padding-top: 20px; border-top: 1px dashed #cbd5e1; text-align: center;">
+                  <p style="font-size: 12px; color: #64748b; margin-bottom: 5px;">TUS CHANCES ACUMULADAS</p>
+                  <span style="font-size: 48px; font-weight: 900; color: #2563eb;">${chances}</span>
+                </div>
+              </div>
+              
+              <div style="text-align: center; font-size: 12px; color: #94a3b8;">
+                <p>Recuerde conservar el ticket físico original. El mismo está sujeto a revisión.</p>
+                <p style="margin-top: 20px; border-top: 1px solid #f1f5f9; padding-top: 20px;">© 2026 PuntoFarma - Sorteo Mundial</p>
+              </div>
             </div>
           `,
         });
       } catch (emailError) {
-        console.error('Error enviando email:', emailError);
+        console.error('Error enviando email SMTP:', emailError);
       }
     }
 
