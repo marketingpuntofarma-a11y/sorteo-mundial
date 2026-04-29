@@ -208,10 +208,32 @@ export default function Home() {
                       className="w-full bg-white/5 border border-white/10 rounded-xl px-12 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all appearance-none"
                     >
                       <option value="" className="bg-slate-900">Seleccionar...</option>
-                      <option value="Sucursal Central" className="bg-slate-900">Sucursal Central</option>
-                      <option value="Sucursal Norte" className="bg-slate-900">Sucursal Norte</option>
-                      <option value="Sucursal Sur" className="bg-slate-900">Sucursal Sur</option>
-                      <option value="Sucursal Este" className="bg-slate-900">Sucursal Este</option>
+                      <option value="FARMACIA MARIA LAURA CURRO S.C.S" className="bg-slate-900">FARMACIA MARIA LAURA CURRO S.C.S</option>
+                      <option value="PFM NUEVA FARMACIA BARRIAL S. C. S" className="bg-slate-900">PFM NUEVA FARMACIA BARRIAL S. C. S</option>
+                      <option value="NUEVA FARMACIA MOURIN S.C.S" className="bg-slate-900">NUEVA FARMACIA MOURIN S.C.S</option>
+                      <option value="FARMACIA PFM CUATRO S.R.L." className="bg-slate-900">FARMACIA PFM CUATRO S.R.L.</option>
+                      <option value="ROCALAN S.C.S" className="bg-slate-900">ROCALAN S.C.S</option>
+                      <option value="FARMACIA CABEZUELO S.C.S" className="bg-slate-900">FARMACIA CABEZUELO S.C.S</option>
+                      <option value="PFM MARCOS AVELLANEDA" className="bg-slate-900">PFM MARCOS AVELLANEDA</option>
+                      <option value="FARMACIA ESCALADA DE LANUS S.C.S" className="bg-slate-900">FARMACIA ESCALADA DE LANUS S.C.S</option>
+                      <option value="PFM FARMACIA CENTRAL S.C.S" className="bg-slate-900">PFM FARMACIA CENTRAL S.C.S</option>
+                      <option value="RIVADALVEAR S.C.S" className="bg-slate-900">RIVADALVEAR S.C.S</option>
+                      <option value="FARMACUSTOM BERNAL S.C.S" className="bg-slate-900">FARMACUSTOM BERNAL S.C.S</option>
+                      <option value="FARMACIA PASTEUR DE MARCELA NOVO Y CIA" className="bg-slate-900">FARMACIA PASTEUR DE MARCELA NOVO Y CIA</option>
+                      <option value="FARMACIA DE LA PLAZA S.C.S" className="bg-slate-900">FARMACIA DE LA PLAZA S.C.S</option>
+                      <option value="FARMACIA TORRES S.C.S" className="bg-slate-900">FARMACIA TORRES S.C.S</option>
+                      <option value="LA GRAN BURZACO S. C. S." className="bg-slate-900">LA GRAN BURZACO S. C. S.</option>
+                      <option value="FARMACIA PASTEUR DE BURZACO S.C.S" className="bg-slate-900">FARMACIA PASTEUR DE BURZACO S.C.S</option>
+                      <option value="GRUPO FARMACEUTICO S.C.S" className="bg-slate-900">GRUPO FARMACEUTICO S.C.S</option>
+                      <option value="PFM NUEVA PRADO S.CS" className="bg-slate-900">PFM NUEVA PRADO S.CS</option>
+                      <option value="SBATELLA FARMACEUTICA S.C.S" className="bg-slate-900">SBATELLA FARMACEUTICA S.C.S</option>
+                      <option value="PFM ITATI S.C.S" className="bg-slate-900">PFM ITATI S.C.S</option>
+                      <option value="PFM BEFFA S.C.S" className="bg-slate-900">PFM BEFFA S.C.S</option>
+                      <option value="PFM SAN MARTIN 2101 S.C.S" className="bg-slate-900">PFM SAN MARTIN 2101 S.C.S</option>
+                      <option value="PFM CHINGOLO S.C.S" className="bg-slate-900">PFM CHINGOLO S.C.S</option>
+                      <option value="FARMACIA TUYUTI S.C.S" className="bg-slate-900">FARMACIA TUYUTI S.C.S</option>
+                      <option value="FARMACIA BIO S.C.S" className="bg-slate-900">FARMACIA BIO S.C.S</option>
+                      <option value="WARNES FARMACEUTICA S.C.S" className="bg-slate-900">WARNES FARMACEUTICA S.C.S</option>
                     </select>
                   </div>
                 </div>
