@@ -223,7 +223,7 @@ export default function Home() {
                       <option value="FARMACIA DE LA PLAZA S.C.S" className="bg-slate-900">FARMACIA DE LA PLAZA S.C.S</option>
                       <option value="FARMACIA TORRES S.C.S" className="bg-slate-900">FARMACIA TORRES S.C.S</option>
                       <option value="LA GRAN BURZACO S. C. S." className="bg-slate-900">LA GRAN BURZACO S. C. S.</option>
-                      <option value="FARMACIA PASTEUR DE BURZACO S.C.S" className="bg-slate-900">FARMACIA PASTEUR DE BURZACO S.C.S</option>
+                      <option value="FARMACIA LIBERTADORES DE BURZACO S. C. S." className="bg-slate-900">FARMACIA LIBERTADORES DE BURZACO S. C. S.</option>
                       <option value="GRUPO FARMACEUTICO S.C.S" className="bg-slate-900">GRUPO FARMACEUTICO S.C.S</option>
                       <option value="PFM NUEVA PRADO S.CS" className="bg-slate-900">PFM NUEVA PRADO S.CS</option>
                       <option value="SBATELLA FARMACEUTICA S.C.S" className="bg-slate-900">SBATELLA FARMACEUTICA S.C.S</option>
