@@ -8,7 +8,7 @@ export default function BasesPage() {
     {
       title: "Organizador",
       icon: <Info className="w-5 h-5 text-blue-400" />,
-      content: "El sorteo es organizado exclusivamente por PuntoFarma."
+      content: "El sorteo es organizado exclusivamente por Puntofarma."
     },
     {
       title: "Vigencia",
@@ -23,7 +23,7 @@ export default function BasesPage() {
     {
       title: "Mecanismo de Participación",
       icon: <Ticket className="w-5 h-5 text-blue-400" />,
-      content: "Registro de tickets de compra a través de esta plataforma. Se otorgará 1 chance por cada $50.000 de compra en tickets correspondientes a clientes Particulares, incluyendo productos de Perfumería y Medicina de Venta Libre."
+      content: "Registro de tickets de compra a través de esta plataforma. Se otorgará 1 chance por cada $50.000 de compra en tickets correspondientes a clientes Particulares con la compra de productos de Perfumería y Medicina de Venta Libre."
     },
     {
       title: "REQUISITO CRÍTICO",
@@ -46,8 +46,8 @@ export default function BasesPage() {
     <div className="min-h-screen bg-[#020617] text-white p-4 md:p-8 font-sans selection:bg-blue-500/30">
       <div className="max-w-3xl mx-auto">
         <header className="mb-10 flex items-center justify-between">
-          <Link 
-            href="/" 
+          <Link
+            href="/"
             className="flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors font-bold group"
           >
             <div className="p-2 bg-blue-500/10 rounded-xl group-hover:bg-blue-500/20 transition-all">
@@ -73,7 +73,7 @@ export default function BasesPage() {
 
           <div className="grid gap-4">
             {sections.map((section, idx) => (
-              <div 
+              <div
                 key={idx}
                 className="bg-white/5 backdrop-blur-xl p-6 rounded-2xl border border-white/10 hover:border-blue-500/30 transition-all group"
               >
