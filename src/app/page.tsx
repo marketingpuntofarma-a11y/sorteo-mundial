@@ -155,14 +155,14 @@ export default function Home() {
                   <label className="text-xs font-semibold text-blue-200/50 ml-2 uppercase tracking-wider">Nombre</label>
                   <div className="relative group">
                     <User className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-blue-400 transition-colors" />
-                    <input required name="name" type="text" placeholder="Ej: Juan" className="w-full bg-white/5 border border-white/10 rounded-xl px-12 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-white/10" />
+                    <input required name="name" type="text" placeholder="Ej: Juan" className="w-full bg-white/[0.02] border border-white/10 rounded-xl px-12 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-white/10" />
                   </div>
                 </div>
                 <div className="space-y-1">
                   <label className="text-xs font-semibold text-blue-200/50 ml-2 uppercase tracking-wider">Apellido</label>
                   <div className="relative group">
                     <User className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-blue-400 transition-colors" />
-                    <input required name="surname" type="text" placeholder="Ej: Pérez" className="w-full bg-white/5 border border-white/10 rounded-xl px-12 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-white/10" />
+                    <input required name="surname" type="text" placeholder="Ej: Pérez" className="w-full bg-white/[0.02] border border-white/10 rounded-xl px-12 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-white/10" />
                   </div>
                 </div>
               </div>
@@ -172,7 +172,7 @@ export default function Home() {
                   <label className="text-xs font-semibold text-blue-200/50 ml-2 uppercase tracking-wider">DNI</label>
                   <div className="relative group">
                     <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-blue-400 transition-colors" />
-                    <input required name="dni" type="text" placeholder="Sin puntos ni espacios" className="w-full bg-white/5 border border-white/10 rounded-xl px-12 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-white/10" />
+                    <input required name="dni" type="text" placeholder="Sin puntos ni espacios" className="w-full bg-white/[0.02] border border-white/10 rounded-xl px-12 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-white/10" />
                   </div>
                 </div>
                 <div className="space-y-1">
@@ -189,7 +189,7 @@ export default function Home() {
                         onChange={handlePhoneChange}
                         placeholder="" 
                         autoComplete="off"
-                        className="w-full bg-white/5 border border-white/10 rounded-xl pl-24 pr-4 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all" 
+                        className="w-full bg-white/[0.02] border border-white/10 rounded-xl pl-24 pr-4 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all" 
                       />
                     </div>
                   </div>
@@ -200,7 +200,7 @@ export default function Home() {
                 <label className="text-xs font-semibold text-blue-200/50 ml-2 uppercase tracking-wider">Email</label>
                 <div className="relative group">
                   <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-blue-400 transition-colors" />
-                  <input required name="email" type="email" placeholder="tu@email.com" className="w-full bg-white/5 border border-white/10 rounded-xl px-12 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-white/10" />
+                  <input required name="email" type="email" placeholder="tu@email.com" className="w-full bg-white/[0.02] border border-white/10 rounded-xl px-12 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-white/10" />
                 </div>
               </div>
 
@@ -229,7 +229,7 @@ export default function Home() {
                     <select 
                       required 
                       name="branch" 
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-12 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all appearance-none"
+                      className="w-full bg-white/[0.02] border border-white/10 rounded-xl px-12 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all appearance-none"
                     >
                       <option value="" className="bg-slate-900">Seleccionar...</option>
                       <option value="FARMACIA MARIA LAURA CURRO S.C.S" className="bg-slate-900">FARMACIA MARIA LAURA CURRO S.C.S</option>
@@ -274,7 +274,7 @@ export default function Home() {
                     value={amountValue}
                     onChange={handleAmountChange}
                     placeholder="Ej: 150.000" 
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-12 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-white/10" 
+                    className="w-full bg-white/[0.02] border border-white/10 rounded-xl px-12 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-white/20" 
                   />
                 </div>
               </div>
