@@ -92,13 +92,16 @@ export default function Home() {
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50"></div>
           
           <div className="text-center mb-6">
-            <div className="inline-block bg-white rounded-full mb-4 shadow-[0_0_30px_rgba(255,255,255,0.2)] w-20 h-20 flex items-center justify-center overflow-hidden border-4 border-blue-500/30">
-               <img src="/logo.png" alt="PuntoFarma" className="w-full h-full object-cover" />
+            <div className="relative inline-block w-full max-w-[480px] mx-auto">
+              <img 
+                src="/logo_v2.png" 
+                alt="Gran Sorteo Mundial PFM" 
+                className="w-full h-auto drop-shadow-[0_0_25px_rgba(59,130,246,0.4)]"
+              />
             </div>
-            <h1 className="text-3xl md:text-4xl font-black text-white mb-2 tracking-tighter uppercase italic">
-              Gran Sorteo <span className="text-transparent bg-clip-text bg-gradient-to-b from-blue-400 to-blue-600">Mundial PFM</span>
-            </h1>
-            <p className="text-sm text-blue-200/60 font-medium tracking-wide">REGISTRÁ TU TICKET Y GANÁ</p>
+            <p className="text-xs text-blue-200/40 font-bold tracking-[0.4em] uppercase mt-[-10px] relative z-20">
+              Registrá tu ticket y ganá
+            </p>
           </div>
 
           {success ? (
