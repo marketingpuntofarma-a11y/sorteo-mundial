@@ -98,7 +98,7 @@ export async function POST(request: Request) {
               </div>
 
               <div style="text-align: center; margin-top: 20px;">
-                <a href="https://sorteo-mundial-pfm.vercel.app/bases" style="display: inline-block; padding: 12px 24px; background-color: #2563eb; color: white; text-decoration: none; border-radius: 8px; font-weight: bold;">Ver Bases y Condiciones</a>
+                <a href="https://sorteo-pfm.vercel.app/bases" style="display: inline-block; padding: 12px 24px; background-color: #2563eb; color: white; text-decoration: none; border-radius: 8px; font-weight: bold;">Ver Bases y Condiciones</a>
               </div>
               
               <div style="text-align: center; font-size: 12px; color: #94a3b8; margin-top: 40px;">
