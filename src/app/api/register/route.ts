@@ -72,9 +72,9 @@ export async function POST(request: Request) {
     if (process.env.SMTP_USER && process.env.SMTP_PASS) {
       try {
         await transporter.sendMail({
-          from: `"Sorteo Mundial PFM" <${process.env.SMTP_FROM || process.env.SMTP_USER}>`,
+          from: `"Sorteo Mundial Puntofarma" <${process.env.SMTP_FROM || process.env.SMTP_USER}>`,
           to: email,
-          subject: '¡Registro Exitoso - Sorteo Mundial PFM!',
+          subject: '¡Registro Exitoso - Sorteo Mundial Puntofarma!',
           html: `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #1e293b; line-height: 1.6;">
               <div style="text-align: center; margin-bottom: 30px;">
@@ -88,15 +88,20 @@ export async function POST(request: Request) {
                   <li style="margin-bottom: 10px;"><strong>N° de Ticket:</strong> ${ticket}</li>
                   <li style="margin-bottom: 10px;"><strong>Sucursal:</strong> ${branch}</li>
                   <li style="margin-bottom: 10px;"><strong>Importe:</strong> $ ${amount}</li>
+                  <li style="margin-bottom: 10px; color: #2563eb;"><strong>Chances con este ticket:</strong> ${currentTicketChances}</li>
                 </ul>
                 
                 <div style="margin-top: 20px; padding-top: 20px; border-top: 1px dashed #cbd5e1; text-align: center;">
-                  <p style="font-size: 12px; color: #64748b; margin-bottom: 5px;">TUS CHANCES ACUMULADAS</p>
+                  <p style="font-size: 12px; color: #64748b; margin-bottom: 5px;">TUS CHANCES TOTALES ACUMULADAS</p>
                   <span style="font-size: 48px; font-weight: 900; color: #2563eb;">${chances}</span>
                 </div>
               </div>
+
+              <div style="text-align: center; margin-top: 20px;">
+                <a href="https://sorteo-mundial-pfm.vercel.app/bases" style="display: inline-block; padding: 12px 24px; background-color: #2563eb; color: white; text-decoration: none; border-radius: 8px; font-weight: bold;">Ver Bases y Condiciones</a>
+              </div>
               
-              <div style="text-align: center; font-size: 12px; color: #94a3b8;">
+              <div style="text-align: center; font-size: 12px; color: #94a3b8; margin-top: 40px;">
                 <p>Recuerde conservar el ticket físico original. El mismo está sujeto a revisión.</p>
                 <p style="margin-top: 20px; border-top: 1px solid #f1f5f9; padding-top: 20px;">© 2026 PuntoFarma - Sorteo Mundial</p>
               </div>
@@ -108,7 +113,7 @@ export async function POST(request: Request) {
       }
     }
 
-    return NextResponse.json({ success: true, participant, chances });
+    return NextResponse.json({ success: true, participant, chances, currentTicketChances });
   } catch (error: any) {
     console.error('Error en el registro:', error);
     return NextResponse.json({ error: 'Error de conexión a la base de datos', details: error.message }, { status: 500 });

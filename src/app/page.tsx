@@ -9,6 +9,7 @@ export default function Home() {
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [chances, setChances] = useState<number>(0);
+  const [currentChances, setCurrentChances] = useState<number>(0);
 
   const [ticketValue, setTicketValue] = useState('');
 
@@ -67,6 +68,7 @@ export default function Home() {
       } else {
         setSuccess('¡Registro exitoso! Recibirás un correo de confirmación.');
         setChances(result.chances);
+        setCurrentChances(result.currentTicketChances);
         setTicketValue('');
         setAmountValue('');
         setPhoneValue('');
@@ -134,19 +136,38 @@ export default function Home() {
               
               <div className="bg-gradient-to-b from-blue-600/20 to-blue-900/40 rounded-[32px] p-8 border border-blue-400/30 shadow-[0_0_40px_rgba(59,130,246,0.2)] relative group overflow-hidden">
                 <div className="absolute inset-0 bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <p className="text-sm text-blue-300 uppercase tracking-[0.2em] mb-3 font-black">Chances acumuladas</p>
-                <p className="text-7xl font-black text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">{chances}</p>
-                <p className="mt-4 text-xs text-blue-100/80 uppercase tracking-widest font-bold italic">
-                  Ticket sujeto a revisión, recuerde guardar el mismo.
+                <div className="grid grid-cols-2 gap-4 divide-x divide-blue-400/20">
+                  <div className="text-center">
+                    <p className="text-[10px] text-blue-300 uppercase tracking-[0.2em] mb-1 font-black">Sumaste</p>
+                    <p className="text-5xl font-black text-white">{currentChances}</p>
+                    <p className="text-[10px] text-blue-300 uppercase tracking-[0.2em] font-black">Chances</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-[10px] text-blue-300 uppercase tracking-[0.2em] mb-1 font-black">Total</p>
+                    <p className="text-5xl font-black text-white">{chances}</p>
+                    <p className="text-[10px] text-blue-300 uppercase tracking-[0.2em] font-black">Acumuladas</p>
+                  </div>
+                </div>
+                <p className="mt-6 text-[10px] text-blue-100/60 uppercase tracking-widest font-bold italic border-t border-blue-400/10 pt-4">
+                  Ticket sujeto a revisión, conserve el original.
                 </p>
               </div>
 
-              <button
-                onClick={() => setSuccess(null)}
-                className="mt-10 px-8 py-5 bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-500 hover:to-blue-300 text-white transition-all rounded-2xl font-black text-lg w-full shadow-[0_10px_20px_rgba(59,130,246,0.3)] hover:shadow-[0_15px_30px_rgba(59,130,246,0.5)] active:scale-95 uppercase tracking-wider"
-              >
-                Registrar otro ticket
-              </button>
+              <div className="mt-8 flex flex-col gap-4">
+                <a 
+                  href="/bases" 
+                  className="text-sm text-blue-400 hover:text-blue-300 underline font-bold tracking-wide transition-colors"
+                >
+                  Ver Bases y Condiciones
+                </a>
+
+                <button
+                  onClick={() => setSuccess(null)}
+                  className="px-8 py-5 bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-500 hover:to-blue-300 text-white transition-all rounded-2xl font-black text-lg w-full shadow-[0_10px_20px_rgba(59,130,246,0.3)] hover:shadow-[0_15px_30px_rgba(59,130,246,0.5)] active:scale-95 uppercase tracking-wider"
+                >
+                  Registrar otro ticket
+                </button>
+              </div>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
