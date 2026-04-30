@@ -112,7 +112,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
             </div>
             
-            <div className="relative z-10 -mt-24 px-4">
+            <div className="relative z-10 -mt-20 px-4">
               <h1 className="text-3xl md:text-4xl font-black italic tracking-tighter text-white mb-1 leading-[0.9]">
                 GRAN SORTEO <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">MUNDIAL</span>
                 <br />
