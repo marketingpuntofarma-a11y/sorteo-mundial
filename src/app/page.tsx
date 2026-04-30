@@ -83,7 +83,7 @@ export default function Home() {
     <main className="min-h-screen bg-[#020617] flex items-center justify-center p-2 sm:p-4 text-white relative overflow-hidden">
       {/* Fullscreen Watermark Background */}
       <div 
-        className="fixed inset-0 z-0 pointer-events-none opacity-[0.07]"
+        className="fixed inset-0 z-0 pointer-events-none opacity-[0.15]"
         style={{
           backgroundImage: 'url("/puntitofarma_mundial.png")',
           backgroundSize: 'cover',
@@ -99,7 +99,7 @@ export default function Home() {
       </div>
 
       <div className="relative z-10 w-full max-w-xl">
-        <div className="bg-slate-900/80 backdrop-blur-3xl p-6 md:p-10 rounded-[40px] border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
+        <div className="bg-slate-900/60 backdrop-blur-3xl p-6 md:p-10 rounded-[40px] border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50"></div>
           
           <div className="text-center mb-8 relative -mt-6 md:-mt-10 -mx-6 md:-mx-10">
