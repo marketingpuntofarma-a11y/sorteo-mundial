@@ -99,7 +99,7 @@ export default function Home() {
       </div>
 
       <div className="relative z-10 w-full max-w-xl">
-        <div className="bg-slate-900/40 backdrop-blur-3xl p-6 md:p-10 rounded-[40px] border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
+        <div className="bg-white/[0.05] backdrop-blur-md p-6 md:p-10 rounded-[40px] border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50"></div>
           
           <div className="text-center mb-8 relative -mt-6 md:-mt-10 -mx-6 md:-mx-10">
