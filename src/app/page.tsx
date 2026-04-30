@@ -91,23 +91,23 @@ export default function Home() {
         <div className="bg-slate-900/80 backdrop-blur-3xl p-6 md:p-10 rounded-[40px] border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50"></div>
           
-          <div className="text-center mb-8 relative">
-            <div className="relative w-full max-w-[520px] mx-auto mb-4 overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl">
+          <div className="text-center mb-8 relative -mt-10 -mx-10">
+            <div className="relative w-full max-w-[550px] mx-auto overflow-hidden rounded-t-[40px] border-b border-white/10 shadow-2xl">
               <img 
                 src="/logo_v3.png" 
                 alt="Fondo Mundial" 
-                className="w-full h-auto object-cover opacity-90 group-hover:scale-105 transition-transform duration-[2000ms]"
+                className="w-full h-auto object-cover opacity-90"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
             </div>
             
-            <div className="relative z-10 -mt-20 px-4">
-              <h1 className="text-4xl md:text-5xl font-black italic tracking-tighter text-white mb-2 leading-[0.9]">
+            <div className="relative z-10 -mt-16 px-4">
+              <h1 className="text-3xl md:text-4xl font-black italic tracking-tighter text-white mb-1 leading-[0.9]">
                 GRAN SORTEO <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">MUNDIAL</span>
                 <br />
-                <span className="text-blue-400 not-italic text-5xl">PFM</span>
+                <span className="text-blue-400 not-italic text-4xl uppercase tracking-tighter">Puntofarma</span>
               </h1>
-              <p className="text-[10px] md:text-xs text-blue-200/50 font-black tracking-[0.5em] uppercase mt-4">
+              <p className="text-[8px] md:text-[10px] text-blue-200/40 font-bold tracking-[0.4em] uppercase mt-3">
                 Registrá tu ticket y ganá
               </p>
             </div>
