@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { Ticket, User, CreditCard, Phone, Mail, MapPin, Send, Loader2 } from 'lucide-react';
 
 export default function Home() {
@@ -268,6 +269,15 @@ export default function Home() {
               >
                 {loading ? <Loader2 className="animate-spin w-7 h-7" /> : 'REGISTRAR TICKET'}
               </button>
+
+              <div className="mt-8 text-center">
+                <Link 
+                  href="/bases" 
+                  className="text-[10px] text-white/30 hover:text-blue-400 uppercase tracking-[0.2em] font-black transition-colors border-b border-transparent hover:border-blue-400/30 pb-1"
+                >
+                  Ver Bases y Condiciones
+                </Link>
+              </div>
             </form>
           )}
         </div>
