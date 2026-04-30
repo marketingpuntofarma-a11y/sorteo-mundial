@@ -81,6 +81,17 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-[#020617] flex items-center justify-center p-2 sm:p-4 text-white relative overflow-hidden">
+      {/* Watermark Background */}
+      <div 
+        className="fixed inset-0 z-0 pointer-events-none opacity-[0.03] grayscale invert"
+        style={{
+          backgroundImage: 'url("/puntitofarma_mundial.png")',
+          backgroundSize: '40%',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      ></div>
+
       {/* Dynamic Background Elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
         <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] rounded-full bg-blue-600/10 blur-[150px]"></div>
