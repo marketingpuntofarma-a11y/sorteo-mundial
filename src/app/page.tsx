@@ -81,12 +81,12 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-[#020617] flex items-center justify-center p-2 sm:p-4 text-white relative overflow-hidden">
-      {/* Watermark Background */}
+      {/* Fullscreen Watermark Background */}
       <div 
-        className="fixed inset-0 z-0 pointer-events-none opacity-[0.03] grayscale invert"
+        className="fixed inset-0 z-0 pointer-events-none opacity-[0.07]"
         style={{
           backgroundImage: 'url("/puntitofarma_mundial.png")',
-          backgroundSize: '40%',
+          backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
         }}
