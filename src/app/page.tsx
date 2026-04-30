@@ -91,12 +91,12 @@ export default function Home() {
         <div className="bg-slate-900/80 backdrop-blur-3xl p-6 md:p-10 rounded-[40px] border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50"></div>
           
-          <div className="text-center mb-8 relative -mt-10 -mx-10">
-            <div className="relative w-full max-w-[550px] mx-auto overflow-hidden rounded-t-[40px] border-b border-white/10 shadow-2xl">
+          <div className="text-center mb-8 relative -mt-6 md:-mt-10 -mx-6 md:-mx-10">
+            <div className="relative w-full overflow-hidden rounded-t-[40px] border-b border-white/10 shadow-2xl">
               <img 
                 src="/logo_v3.png" 
                 alt="Fondo Mundial" 
-                className="w-full h-auto object-cover opacity-90"
+                className="w-full h-auto object-cover opacity-90 block"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
             </div>
