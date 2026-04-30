@@ -92,16 +92,14 @@ export default function Home() {
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50"></div>
           
           <div className="text-center mb-6">
-            <div className="relative inline-block w-full max-w-[480px] mx-auto">
+            <div className="relative inline-block w-full max-w-[480px] mx-auto group">
+              <div className="absolute inset-0 bg-blue-500/10 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
               <img 
                 src="/logo_v2.png" 
                 alt="Gran Sorteo Mundial PFM" 
-                className="w-full h-auto drop-shadow-[0_0_25px_rgba(59,130,246,0.4)]"
+                className="w-full h-auto rounded-3xl drop-shadow-[0_0_25px_rgba(59,130,246,0.4)] relative z-10 border border-white/5"
               />
             </div>
-            <p className="text-xs text-blue-200/40 font-bold tracking-[0.4em] uppercase mt-[-10px] relative z-20">
-              Registrá tu ticket y ganá
-            </p>
           </div>
 
           {success ? (
