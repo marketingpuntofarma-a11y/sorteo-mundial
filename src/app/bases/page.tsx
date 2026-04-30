@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronLeft, FileText, Info, Award, Calendar, UserCheck, Ticket, Instagram } from 'lucide-react';
+import { ChevronLeft, FileText, Info, Award, Calendar, UserCheck, Ticket, Share2 } from 'lucide-react';
 import Link from 'next/link';
 
 export default function BasesPage() {
@@ -37,7 +37,7 @@ export default function BasesPage() {
     },
     {
       title: "Sorteo",
-      icon: <Instagram className="w-5 h-5 text-pink-400" />,
+      icon: <Share2 className="w-5 h-5 text-pink-400" />,
       content: "El sorteo se realizará el día 11/06/2026 en vivo a través de nuestra cuenta oficial de Instagram."
     }
   ];
