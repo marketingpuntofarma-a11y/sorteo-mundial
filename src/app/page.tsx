@@ -273,7 +273,7 @@ export default function Home() {
               <div className="mt-8 text-center">
                 <Link 
                   href="/bases" 
-                  className="text-[10px] text-white/30 hover:text-blue-400 uppercase tracking-[0.2em] font-black transition-colors border-b border-transparent hover:border-blue-400/30 pb-1"
+                  className="text-[10px] text-white/60 hover:text-blue-300 uppercase tracking-[0.3em] font-black transition-all border-b border-white/10 hover:border-blue-400/50 pb-1 drop-shadow-sm"
                 >
                   Ver Bases y Condiciones
                 </Link>
