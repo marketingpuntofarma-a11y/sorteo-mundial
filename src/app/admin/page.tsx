@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Trash2, LogOut, Users, RefreshCw } from 'lucide-react';
+import { Trash2, LogOut, Users, RefreshCw, Search, Download, Hash } from 'lucide-react';
+import * as XLSX from 'xlsx';
 
 export default function AdminPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -10,6 +11,7 @@ export default function AdminPage() {
   const [participants, setParticipants] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,6 +47,41 @@ export default function AdminPage() {
       setLoading(false);
     }
   };
+
+  const handleExport = () => {
+    const dataToExport = participants.map(p => ({
+      ID: p.id,
+      Fecha: new Date(p.createdAt).toLocaleString(),
+      Nombre: p.name,
+      Apellido: p.surname,
+      DNI: p.dni,
+      Email: p.email,
+      Teléfono: p.phone,
+      Ticket: p.ticket,
+      Sucursal: p.branch,
+      Importe: p.amount,
+      Chances: p.amount ? Math.floor(parseFloat(p.amount.replace(/\./g, '').replace(',', '.')) / 50000) : 0
+    }));
+
+    const ws = XLSX.utils.json_to_sheet(dataToExport);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Participantes");
+    XLSX.writeFile(wb, `Sorteo_Participantes_${new Date().toISOString().split('T')[0]}.xlsx`);
+  };
+
+  const filteredParticipants = participants.filter(p => {
+    const search = searchTerm.toLowerCase();
+    return (
+      p.name?.toLowerCase().includes(search) ||
+      p.surname?.toLowerCase().includes(search) ||
+      p.dni?.toLowerCase().includes(search) ||
+      p.email?.toLowerCase().includes(search) ||
+      p.ticket?.toLowerCase().includes(search) ||
+      p.branch?.toLowerCase().includes(search) ||
+      p.phone?.toLowerCase().includes(search) ||
+      p.id?.toString().includes(search)
+    );
+  });
 
   const handleDelete = async (id: number) => {
     if (!confirm('¿Estás seguro de eliminar este registro?')) return;
@@ -111,17 +148,33 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen bg-[#0f172a] text-white p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
-        <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10 bg-white/5 p-6 rounded-3xl border border-white/10">
+        <header className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 bg-white/5 p-6 rounded-3xl border border-white/10">
           <div>
             <h1 className="text-3xl font-bold text-white flex items-center gap-3">
               <Users className="text-blue-400" /> Control de Participantes
             </h1>
             <p className="text-white/60 mt-1">Gestiona los registros del sorteo</p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="relative group min-w-[280px]">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-blue-400 transition-colors w-4 h-4" />
+              <input 
+                type="text"
+                placeholder="Buscar por DNI, Nombre, Ticket..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full bg-white/5 border border-white/10 rounded-xl pl-11 pr-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
+              />
+            </div>
+            <button 
+              onClick={handleExport}
+              className="flex items-center gap-2 bg-green-500/10 text-green-400 px-5 py-3 rounded-xl hover:bg-green-500/20 transition-all border border-green-500/20 font-bold"
+            >
+              <Download className="w-5 h-5" /> Exportar
+            </button>
             <button 
               onClick={fetchParticipants}
-              className="p-3 bg-white/5 hover:bg-white/10 rounded-xl transition-all"
+              className="p-3 bg-white/5 hover:bg-white/10 rounded-xl transition-all border border-white/10"
               title="Refrescar"
             >
               <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
@@ -139,42 +192,46 @@ export default function AdminPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left">
               <thead>
-                <tr className="bg-white/5 text-white/50 text-sm uppercase tracking-wider">
-                  <th className="px-6 py-5 font-semibold">Participante</th>
-                  <th className="px-6 py-5 font-semibold">DNI / Email</th>
-                  <th className="px-6 py-5 font-semibold">Ticket / Sucursal</th>
-                  <th className="px-6 py-4 text-right text-xs font-bold text-white/40 uppercase tracking-widest">Importe</th>
-                  <th className="px-6 py-4 text-center text-xs font-bold text-white/40 uppercase tracking-widest">Chances</th>
-                  <th className="px-6 py-4 text-center text-xs font-bold text-white/40 uppercase tracking-widest">Fecha Reg.</th>
-                  <th className="px-6 py-5 font-semibold text-center">Acciones</th>
+                <tr className="bg-white/5 text-white/50 text-xs uppercase tracking-widest">
+                  <th className="px-6 py-5 font-bold flex items-center gap-2"><Hash className="w-3 h-3" /> ID</th>
+                  <th className="px-6 py-5 font-bold">Participante</th>
+                  <th className="px-6 py-5 font-bold">DNI / Email</th>
+                  <th className="px-6 py-5 font-bold">Ticket / Sucursal</th>
+                  <th className="px-6 py-4 text-right">Importe</th>
+                  <th className="px-6 py-4 text-center">Chances</th>
+                  <th className="px-6 py-4 text-center">Fecha Reg.</th>
+                  <th className="px-6 py-5 font-bold text-center">Acciones</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
-                {participants.map((p) => (
+                {filteredParticipants.map((p) => (
                   <tr key={p.id} className="hover:bg-white/[0.02] transition-colors">
+                    <td className="px-6 py-5 text-white/40 font-mono text-xs">
+                      {p.id}
+                    </td>
                     <td className="px-6 py-5">
                       <div className="font-bold text-white">{p.name} {p.surname}</div>
                       <div className="text-sm text-white/50">{p.phone}</div>
                     </td>
                     <td className="px-6 py-5">
-                      <div className="text-white">{p.dni}</div>
-                      <div className="text-sm text-white/50">{p.email}</div>
+                      <div className="text-white font-medium">{p.dni}</div>
+                      <div className="text-xs text-white/40 truncate max-w-[150px]">{p.email}</div>
                     </td>
                     <td className="px-6 py-5">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-lg text-[10px] font-black bg-blue-500/20 text-blue-400 border border-blue-500/30 uppercase tracking-tighter">
                         #{p.ticket}
                       </span>
-                      <div className="text-sm text-white/50 mt-1">{p.branch}</div>
+                      <div className="text-xs text-white/50 mt-1">{p.branch}</div>
                     </td>
                     <td className="px-6 py-5 text-right font-mono text-green-400 font-bold">
                       {p.amount ? `$ ${p.amount}` : '-'}
                     </td>
                     <td className="px-6 py-5 text-center">
-                      <span className="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-sm font-black border border-blue-500/30 shadow-[0_0_10px_rgba(59,130,246,0.2)]">
+                      <span className="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-xs font-black border border-blue-500/30 shadow-[0_0_10px_rgba(59,130,246,0.2)]">
                         {p.amount ? Math.floor(parseFloat(p.amount.replace(/\./g, '').replace(',', '.')) / 50000) : 0}
                       </span>
                     </td>
-                    <td className="px-6 py-5 text-center text-white/60">
+                    <td className="px-6 py-5 text-center text-white/60 text-sm">
                       {new Date(p.createdAt).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-5 text-center">
@@ -188,10 +245,10 @@ export default function AdminPage() {
                     </td>
                   </tr>
                 ))}
-                {participants.length === 0 && !loading && (
+                {filteredParticipants.length === 0 && !loading && (
                   <tr>
-                    <td colSpan={6} className="px-6 py-20 text-center text-white/40">
-                      No hay registros todavía.
+                    <td colSpan={8} className="px-6 py-20 text-center text-white/40 font-medium">
+                      {searchTerm ? 'No se encontraron resultados para tu búsqueda.' : 'No hay registros todavía.'}
                     </td>
                   </tr>
                 )}
