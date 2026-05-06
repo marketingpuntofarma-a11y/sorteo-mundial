@@ -18,7 +18,7 @@ export default function AdminPage() {
 
   // Estados para el sorteo
   const [sorteoLoading, setSorteoLoading] = useState(false);
-  const [winner, setWinner] = useState<any>(null);
+  const [winners, setWinners] = useState<any[]>([]);
   const [sorteoStats, setSorteoStats] = useState({ chances: 0, totalTickets: 0, totalParticipants: 0 });
   const [sorteoError, setSorteoError] = useState<string | null>(null);
 
@@ -113,7 +113,7 @@ export default function AdminPage() {
   const handleSorteo = async () => {
     setSorteoLoading(true);
     setSorteoError(null);
-    setWinner(null);
+    setWinners([]);
 
     await new Promise(r => setTimeout(r, 2000));
 
@@ -126,9 +126,9 @@ export default function AdminPage() {
         return;
       }
 
-      setWinner(data.winner);
+      setWinners(data.winners);
       setSorteoStats({
-        chances: data.totalChances,
+        chances: data.winners.reduce((acc: number, w: any) => acc + (w.totalChances || 0), 0), // Total chances of winners (optional display)
         totalTickets: data.totalTicketsInPool,
         totalParticipants: data.totalUniqueParticipants
       });
@@ -334,7 +334,7 @@ export default function AdminPage() {
                 </div>
               )}
 
-              {!winner && !sorteoLoading && (
+              {winners.length === 0 && !sorteoLoading && (
                 <div className="space-y-8 animate-in fade-in duration-700">
                   <div className="inline-flex p-4 rounded-3xl bg-purple-500/10 border border-purple-500/20 mb-4">
                     <Trophy className="w-16 h-16 text-purple-400" />
@@ -343,7 +343,7 @@ export default function AdminPage() {
                     Gran Sorteo <span className="text-blue-400">PFM</span>
                   </h2>
                   <p className="text-white/50 mb-10 text-lg">
-                    El sistema seleccionará un ganador de forma aleatoria,<br />
+                    El sistema seleccionará 3 ganadores distintos de forma aleatoria,<br />
                     ponderando las chances acumuladas por cada DNI (ticket a ticket).
                   </p>
                   <button
@@ -370,44 +370,59 @@ export default function AdminPage() {
                 </div>
               )}
 
-              {winner && !sorteoLoading && (
-                <div className="animate-in zoom-in duration-500 fade-in slide-in-from-bottom-10 w-full">
-                  <div className="bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-2xl border border-white/20 p-10 rounded-[3rem] shadow-2xl shadow-purple-900/50">
-                    <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-tr from-yellow-400 to-amber-600 mb-8 shadow-xl shadow-yellow-500/20">
-                      <Trophy className="w-12 h-12 text-white" />
-                    </div>
-                    
-                    <h2 className="text-2xl text-blue-400 font-black italic tracking-tighter mb-2 uppercase">¡TENEMOS GANADOR!</h2>
-                    <h3 className="text-5xl md:text-7xl font-black italic text-white mb-8 tracking-tighter uppercase leading-tight">
-                      {winner.name} {winner.surname}
-                    </h3>
-                    
-                    <div className="max-w-xs mx-auto mb-8 text-center">
-                      <div className="bg-black/40 rounded-2xl p-6 border border-white/5 shadow-inner">
-                        <p className="text-blue-200/40 text-xs font-bold uppercase tracking-[0.2em] mb-2">DNI del Ganador</p>
-                        <p className="font-mono text-3xl font-black tracking-widest text-white">
-                          ****{winner.dni?.toString().slice(-4)}
-                        </p>
-                      </div>
-                    </div>
+              {winners.length > 0 && !sorteoLoading && (
+                <div className="animate-in zoom-in duration-500 fade-in slide-in-from-bottom-10 w-full space-y-12">
+                  <div className="text-center">
+                    <h2 className="text-4xl font-black italic text-blue-400 uppercase tracking-tighter mb-2">¡RESULTADOS DEL SORTEO!</h2>
+                    <p className="text-white/40 uppercase tracking-widest text-sm">Se han seleccionado 3 ganadores distintos</p>
+                  </div>
 
-                    <div className="flex flex-col md:flex-row justify-center gap-6 mt-8 pt-8 border-t border-white/10 text-white/50">
-                      <div className="flex items-center">
-                        <TicketIcon className="w-5 h-5 mr-2 text-purple-400" />
-                        <span>Ganó con <b className="text-white">{sorteoStats.chances}</b> chances</span>
+                  <div className="grid grid-cols-1 gap-8 w-full max-w-4xl mx-auto">
+                    {winners.map((w, idx) => (
+                      <div key={idx} className="bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-2xl border border-white/20 p-8 md:p-12 rounded-[3rem] shadow-2xl relative overflow-hidden group hover:border-blue-500/50 transition-all">
+                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50"></div>
+                        
+                        <div className="flex flex-col md:flex-row items-center gap-8 text-left">
+                          <div className="flex-shrink-0 inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-tr from-yellow-400 to-amber-600 shadow-xl shadow-yellow-500/20">
+                            <Trophy className="w-10 h-10 text-white" />
+                          </div>
+
+                          <div className="flex-grow text-center md:text-left">
+                            <h4 className="text-blue-400 font-black italic tracking-tighter text-xl uppercase mb-1">
+                              {w.prize}
+                            </h4>
+                            <h3 className="text-4xl md:text-5xl font-black italic text-white mb-6 tracking-tighter uppercase leading-tight">
+                              {w.name} {w.surname}
+                            </h3>
+                            
+                            <div className="inline-block bg-black/40 rounded-2xl p-4 border border-white/5 text-center px-8">
+                              <p className="text-white/40 text-[10px] font-bold uppercase tracking-[0.2em] mb-1">DNI del Ganador</p>
+                              <p className="font-mono text-2xl font-black tracking-widest text-white">
+                                ****{w.dni?.toString().slice(-4)}
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="flex-shrink-0 flex flex-col gap-2 items-center md:items-end border-t md:border-t-0 md:border-l border-white/10 pt-6 md:pt-0 md:pl-8">
+                            <div className="flex items-center text-white/50 text-sm">
+                              <TicketIcon className="w-4 h-4 mr-2 text-purple-400" />
+                              <span>{w.totalChances} chances</span>
+                            </div>
+                            <div className="flex items-center text-white/30 text-[10px] uppercase font-bold tracking-widest">
+                              <Users className="w-3 h-3 mr-2" />
+                              <span>Participante #{w.id}</span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <div className="flex items-center">
-                        <Users className="w-5 h-5 mr-2 text-indigo-400" />
-                        <span>De <b className="text-white">{sorteoStats.totalParticipants}</b> participantes</span>
-                      </div>
-                    </div>
+                    ))}
                   </div>
 
                   <button
-                    onClick={() => setWinner(null)}
-                    className="mt-8 px-8 py-4 bg-white/5 hover:bg-white/10 transition-colors rounded-full font-medium text-white/70 hover:text-white"
+                    onClick={() => setWinners([])}
+                    className="mt-8 px-10 py-5 bg-white/5 hover:bg-white/10 border border-white/10 transition-all rounded-full font-bold text-white/70 hover:text-white uppercase tracking-widest text-sm"
                   >
-                    Realizar otro sorteo
+                    Realizar nuevo sorteo
                   </button>
                 </div>
               )}

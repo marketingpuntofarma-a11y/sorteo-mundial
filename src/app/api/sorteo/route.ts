@@ -38,14 +38,29 @@ export async function GET() {
       return NextResponse.json({ error: 'No hay participantes con al menos 1 chance (mínimo $50.000).' }, { status: 400 });
     }
 
-    const randomIndex = Math.floor(Math.random() * loteria.length);
-    const winningDNI = loteria[randomIndex];
+    const winners: any[] = [];
+    const pool = [...loteria];
 
-    const winnerData = chancesMap.get(winningDNI);
+    for (let i = 0; i < 3; i++) {
+      if (pool.length === 0) break;
+      
+      const randomIndex = Math.floor(Math.random() * pool.length);
+      const winningDNI = pool[randomIndex];
+      const winnerData = chancesMap.get(winningDNI);
+      
+      winners.push({
+        ...winnerData,
+        prize: i === 0 ? '1er Premio: SMART TV 65"' : i === 1 ? '2do Premio: SMART TV 32"' : '3er Premio: Cafetera Eléctrica'
+      });
+
+      // Remover todas las ocurrencias de este DNI para no repetir ganador
+      while (pool.indexOf(winningDNI) !== -1) {
+        pool.splice(pool.indexOf(winningDNI), 1);
+      }
+    }
 
     return NextResponse.json({
-      winner: winnerData,
-      totalChances: winnerData.totalChances,
+      winners,
       totalTicketsInPool: loteria.length,
       totalUniqueParticipants: chancesMap.size
     });

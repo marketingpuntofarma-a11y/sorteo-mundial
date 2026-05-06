@@ -33,7 +33,7 @@ export default function BasesPage() {
     {
       title: "Premios",
       icon: <Award className="w-5 h-5 text-blue-400" />,
-      content: "Se sortearán 3 premios principales: 1) 65 pulgadas TV - smart, 2) TV 32 Pulgadas smart, 3) cafetera eléctrica de filtro."
+      content: "Se sortearán 3 premios principales: 1er Premio: Un SMART TV de 65 pulgadas, 2do premio: Un SMART TV de 32 pulgadas, 3er Premio: Una cafetera eléctrica de filtro."
     },
     {
       title: "Sorteo",
