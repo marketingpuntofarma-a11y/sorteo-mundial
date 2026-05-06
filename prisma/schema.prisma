@@ -16,7 +16,9 @@ model Participant {
   phone     String
   ticket    String
   branch    String
+  amount    String?
   createdAt DateTime @default(now())
 
   @@unique([ticket, branch])
 }
+

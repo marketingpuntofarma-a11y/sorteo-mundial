@@ -15,24 +15,41 @@ export async function GET() {
     const loteria: string[] = [];
 
     for (const p of allParticipants) {
-      if (!chancesMap.has(p.dni)) {
-        chancesMap.set(p.dni, p);
+      // Cálculo de chances del ticket actual
+      const cleanAmount = parseFloat(p.amount?.replace(/\./g, '').replace(',', '.') || '0');
+      const ticketChances = Math.floor(cleanAmount / 50000);
+
+      if (ticketChances > 0) {
+        if (!chancesMap.has(p.dni)) {
+          chancesMap.set(p.dni, { ...p, totalChances: 0 });
+        }
+        
+        // Sumar chances al DNI
+        chancesMap.get(p.dni).totalChances += ticketChances;
+        
+        // Agregar al bolillero tantas veces como chances tenga este ticket
+        for (let i = 0; i < ticketChances; i++) {
+          loteria.push(p.dni);
+        }
       }
-      loteria.push(p.dni);
+    }
+
+    if (loteria.length === 0) {
+      return NextResponse.json({ error: 'No hay participantes con al menos 1 chance (mínimo $50.000).' }, { status: 400 });
     }
 
     const randomIndex = Math.floor(Math.random() * loteria.length);
     const winningDNI = loteria[randomIndex];
 
     const winnerData = chancesMap.get(winningDNI);
-    const totalChances = loteria.filter(d => d === winningDNI).length;
 
     return NextResponse.json({
       winner: winnerData,
-      totalChances,
-      totalTickets: loteria.length,
+      totalChances: winnerData.totalChances,
+      totalTicketsInPool: loteria.length,
       totalUniqueParticipants: chancesMap.size
     });
+
 
   } catch (error) {
     console.error('Error en el sorteo:', error);
