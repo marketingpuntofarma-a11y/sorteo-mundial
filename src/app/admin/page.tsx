@@ -327,7 +327,7 @@ export default function AdminPage() {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center py-20 px-4">
-            <div className="max-w-2xl w-full text-center">
+            <div className="max-w-6xl w-full text-center">
               {sorteoError && (
                 <div className="bg-red-500/10 border border-red-500/50 text-red-400 p-4 rounded-2xl mb-8">
                   {sorteoError}
@@ -377,41 +377,39 @@ export default function AdminPage() {
                     <p className="text-white/40 uppercase tracking-widest text-sm">Se han seleccionado 3 ganadores distintos</p>
                   </div>
 
-                  <div className="grid grid-cols-1 gap-8 w-full max-w-4xl mx-auto">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mx-auto">
                     {winners.map((w, idx) => (
-                      <div key={idx} className="bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-2xl border border-white/20 p-8 md:p-12 rounded-[3rem] shadow-2xl relative overflow-hidden group hover:border-blue-500/50 transition-all">
+                      <div key={idx} className="bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-2xl border border-white/20 p-6 rounded-[2.5rem] shadow-2xl relative overflow-hidden group hover:border-blue-500/50 transition-all flex flex-col items-center text-center">
                         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50"></div>
                         
-                        <div className="flex flex-col md:flex-row items-center gap-8 text-left">
-                          <div className="flex-shrink-0 inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-tr from-yellow-400 to-amber-600 shadow-xl shadow-yellow-500/20">
-                            <Trophy className="w-10 h-10 text-white" />
-                          </div>
+                        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-tr from-yellow-400 to-amber-600 mb-6 shadow-xl shadow-yellow-500/20">
+                          <Trophy className="w-8 h-8 text-white" />
+                        </div>
 
-                          <div className="flex-grow text-center md:text-left">
-                            <h4 className="text-blue-400 font-black italic tracking-tighter text-xl uppercase mb-1">
-                              {w.prize}
-                            </h4>
-                            <h3 className="text-4xl md:text-5xl font-black italic text-white mb-6 tracking-tighter uppercase leading-tight">
-                              {w.name} {w.surname}
-                            </h3>
-                            
-                            <div className="inline-block bg-black/40 rounded-2xl p-4 border border-white/5 text-center px-8">
-                              <p className="text-white/40 text-[10px] font-bold uppercase tracking-[0.2em] mb-1">DNI del Ganador</p>
-                              <p className="font-mono text-2xl font-black tracking-widest text-white">
-                                ****{w.dni?.toString().slice(-4)}
-                              </p>
-                            </div>
+                        <div className="flex-grow">
+                          <h4 className="text-blue-400 font-black italic tracking-tighter text-sm uppercase mb-1">
+                            {w.prize}
+                          </h4>
+                          <h3 className="text-2xl md:text-3xl font-black italic text-white mb-6 tracking-tighter uppercase leading-tight h-16 flex items-center justify-center">
+                            {w.name} {w.surname}
+                          </h3>
+                          
+                          <div className="bg-black/40 rounded-xl p-3 border border-white/5 mb-6">
+                            <p className="text-white/40 text-[8px] font-bold uppercase tracking-[0.2em] mb-1">DNI del Ganador</p>
+                            <p className="font-mono text-xl font-black tracking-widest text-white">
+                              ****{w.dni?.toString().slice(-4)}
+                            </p>
                           </div>
+                        </div>
 
-                          <div className="flex-shrink-0 flex flex-col gap-2 items-center md:items-end border-t md:border-t-0 md:border-l border-white/10 pt-6 md:pt-0 md:pl-8">
-                            <div className="flex items-center text-white/50 text-sm">
-                              <TicketIcon className="w-4 h-4 mr-2 text-purple-400" />
-                              <span>{w.totalChances} chances</span>
-                            </div>
-                            <div className="flex items-center text-white/30 text-[10px] uppercase font-bold tracking-widest">
-                              <Users className="w-3 h-3 mr-2" />
-                              <span>Participante #{w.id}</span>
-                            </div>
+                        <div className="w-full border-t border-white/10 pt-4 mt-auto">
+                          <div className="flex items-center justify-center text-white/50 text-xs mb-1">
+                            <TicketIcon className="w-3 h-3 mr-2 text-purple-400" />
+                            <span>{w.totalChances} chances</span>
+                          </div>
+                          <div className="flex items-center justify-center text-white/30 text-[8px] uppercase font-bold tracking-widest">
+                            <Users className="w-2 h-2 mr-2" />
+                            <span>Participante #{w.id}</span>
                           </div>
                         </div>
                       </div>
