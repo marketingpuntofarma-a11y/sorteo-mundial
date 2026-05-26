@@ -467,18 +467,7 @@ export default function AdminPage() {
                               ****{w.dni?.toString().slice(-4)}
                             </p>
                           </div>
-                        </div>
-
-                        <div className="w-full border-t border-white/10 pt-4 mt-auto">
-                          <div className="flex items-center justify-center text-white/50 text-xs mb-1">
-                            <TicketIcon className="w-3 h-3 mr-2 text-purple-400" />
-                            <span>{w.totalChances} chances</span>
-                          </div>
-                          <div className="flex items-center justify-center text-white/30 text-[8px] uppercase font-bold tracking-widest">
-                            <Users className="w-2 h-2 mr-2" />
-                            <span>Participante #{w.id}</span>
-                          </div>
-                        </div>
+                        </div>                        
                       </div>
                     ))}
                   </div>
