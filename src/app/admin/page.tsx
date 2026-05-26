@@ -205,6 +205,30 @@ export default function AdminPage() {
     }
   };
 
+  // Calcular estadísticas en base a los participantes que tienen chances > 0
+  const stats = (() => {
+    let ticketsCount = 0;
+    const uniqueDnis = new Set<string>();
+    let totalChances = 0;
+
+    participants.forEach((p) => {
+      const cleanAmount = parseFloat(p.amount?.replace(/\./g, '').replace(',', '.') || '0');
+      const chances = Math.floor(cleanAmount / 50000);
+      
+      if (chances > 0) {
+        ticketsCount++;
+        uniqueDnis.add(p.dni);
+        totalChances += chances;
+      }
+    });
+
+    return {
+      ticketsCount,
+      participantsCount: uniqueDnis.size,
+      totalChances
+    };
+  })();
+
 
   if (!isLoggedIn) {
     return (
@@ -262,19 +286,36 @@ export default function AdminPage() {
               </div>
               Panel de Administración
             </h1>
-            <div className="flex gap-4 mt-4">
-              <button 
-                onClick={() => setActiveTab('participants')}
-                className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === 'participants' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30' : 'bg-white/5 text-white/50 hover:bg-white/10'}`}
-              >
-                Participantes
-              </button>
-              <button 
-                onClick={() => setActiveTab('sorteo')}
-                className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === 'sorteo' ? 'bg-purple-600 text-white shadow-lg shadow-purple-500/30' : 'bg-white/5 text-white/50 hover:bg-white/10'}`}
-              >
-                Realizar Sorteo
-              </button>
+            <div className="flex flex-wrap items-center gap-4 mt-4">
+              <div className="flex gap-4">
+                <button 
+                  onClick={() => setActiveTab('participants')}
+                  className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === 'participants' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30' : 'bg-white/5 text-white/50 hover:bg-white/10'}`}
+                >
+                  Participantes
+                </button>
+                <button 
+                  onClick={() => setActiveTab('sorteo')}
+                  className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === 'sorteo' ? 'bg-purple-600 text-white shadow-lg shadow-purple-500/30' : 'bg-white/5 text-white/50 hover:bg-white/10'}`}
+                >
+                  Realizar Sorteo
+                </button>
+              </div>
+
+              {/* Estadísticas de conteo */}
+              <div className="flex items-center gap-4 text-xs font-semibold text-white/60 bg-white/5 border border-white/10 px-4 py-2.5 rounded-xl">
+                <div>
+                  Tickets: <span className="font-bold text-blue-400 font-mono text-sm ml-1">{stats.ticketsCount}</span>
+                </div>
+                <div className="w-[1px] h-4 bg-white/10"></div>
+                <div>
+                  Participantes: <span className="font-bold text-purple-400 font-mono text-sm ml-1">{stats.participantsCount}</span>
+                </div>
+                <div className="w-[1px] h-4 bg-white/10"></div>
+                <div>
+                  Chances Totales: <span className="font-bold text-green-400 font-mono text-sm ml-1">{stats.totalChances}</span>
+                </div>
+              </div>
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-3">
