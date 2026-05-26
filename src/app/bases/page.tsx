@@ -23,7 +23,7 @@ export default function BasesPage() {
     {
       title: "Mecanismo de Participación",
       icon: <Ticket className="w-5 h-5 text-blue-400" />,
-      content: "Registro de tickets de compra a través de esta plataforma. Se otorgará 1 chance por cada $50.000 de compra en tickets correspondientes a clientes Particulares con la compra de productos de Perfumería y Medicina de Venta Libre."
+      content: "Registro de tickets de compra a través de esta plataforma. Se otorgará 1 chance por cada $50.000 de compra en un mismo ticket correspondiente a clientes Particulares con la compra de productos de Perfumería y/o Medicina de Venta Libre."
     },
     {
       title: "REQUISITO CRÍTICO",

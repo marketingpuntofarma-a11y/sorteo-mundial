@@ -41,3 +41,37 @@ export async function DELETE(request: Request) {
     return NextResponse.json({ error: 'Error al eliminar registro' }, { status: 500 });
   }
 }
+
+export async function PUT(request: Request) {
+  if (!(await checkAuth())) {
+    return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
+  }
+
+  try {
+    const { id, name, surname, dni, email, phone, ticket, branch, amount } = await request.json();
+
+    if (!id || !name || !surname || !dni || !ticket || !branch) {
+      return NextResponse.json({ error: 'Faltan campos obligatorios' }, { status: 400 });
+    }
+
+    await sql`
+      UPDATE "Participant"
+      SET 
+        name = ${name},
+        surname = ${surname},
+        dni = ${dni},
+        email = ${email || ''},
+        phone = ${phone || ''},
+        ticket = ${ticket},
+        branch = ${branch},
+        amount = ${amount || null}
+      WHERE id = ${Number(id)}
+    `;
+
+    return NextResponse.json({ success: true });
+  } catch (error: any) {
+    console.error('ERROR AL EDITAR PARTICIPANTE:', error);
+    return NextResponse.json({ error: 'Error al editar registro', details: error.message }, { status: 500 });
+  }
+}
+

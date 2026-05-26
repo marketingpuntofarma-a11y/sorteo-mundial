@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Trash2, LogOut, Users, RefreshCw, Search, Download, Hash, Trophy, Sparkles, Ticket as TicketIcon } from 'lucide-react';
+import { Trash2, LogOut, Users, RefreshCw, Search, Download, Hash, Trophy, Sparkles, Pencil, Ticket as TicketIcon } from 'lucide-react';
 import * as XLSX from 'xlsx';
 import confetti from 'canvas-confetti';
 
@@ -21,6 +21,21 @@ export default function AdminPage() {
   const [winners, setWinners] = useState<any[]>([]);
   const [sorteoStats, setSorteoStats] = useState({ chances: 0, totalTickets: 0, totalParticipants: 0 });
   const [sorteoError, setSorteoError] = useState<string | null>(null);
+
+  // Estados para la edición
+  const [editingParticipant, setEditingParticipant] = useState<any | null>(null);
+  const [editForm, setEditForm] = useState({
+    name: '',
+    surname: '',
+    dni: '',
+    email: '',
+    phone: '',
+    ticket: '',
+    branch: '',
+    amount: ''
+  });
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState('');
 
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -92,6 +107,49 @@ export default function AdminPage() {
       p.id?.toString().includes(search)
     );
   });
+
+  const handleEditClick = (p: any) => {
+    setEditingParticipant(p);
+    setEditForm({
+      name: p.name || '',
+      surname: p.surname || '',
+      dni: p.dni || '',
+      email: p.email || '',
+      phone: p.phone || '',
+      ticket: p.ticket || '',
+      branch: p.branch || '',
+      amount: p.amount || ''
+    });
+    setSaveError('');
+  };
+
+  const handleUpdate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingParticipant) return;
+    setSaving(true);
+    setSaveError('');
+    try {
+      const res = await fetch('/api/admin/participants', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: editingParticipant.id,
+          ...editForm
+        })
+      });
+      if (res.ok) {
+        setParticipants(participants.map(p => p.id === editingParticipant.id ? { ...p, ...editForm } : p));
+        setEditingParticipant(null);
+      } else {
+        const data = await res.json();
+        setSaveError(data.error || 'Error al guardar los cambios');
+      }
+    } catch (err) {
+      setSaveError('Error de red al intentar guardar');
+    } finally {
+      setSaving(false);
+    }
+  };
 
   const handleDelete = async (id: number) => {
     if (!confirm('¿Estás seguro de eliminar este registro?')) return;
@@ -304,13 +362,22 @@ export default function AdminPage() {
                         {new Date(p.createdAt).toLocaleDateString()}
                       </td>
                       <td className="px-6 py-5 text-center">
-                        <button
-                          onClick={() => handleDelete(p.id)}
-                          className="p-3 text-red-400 hover:bg-red-500/10 rounded-2xl transition-all"
-                          title="Eliminar registro"
-                        >
-                          <Trash2 className="w-5 h-5" />
-                        </button>
+                        <div className="flex items-center justify-center gap-2">
+                          <button
+                            onClick={() => handleEditClick(p)}
+                            className="p-3 text-blue-400 hover:bg-blue-500/10 rounded-2xl transition-all"
+                            title="Editar registro"
+                          >
+                            <Pencil className="w-5 h-5" />
+                          </button>
+                          <button
+                            onClick={() => handleDelete(p.id)}
+                            className="p-3 text-red-400 hover:bg-red-500/10 rounded-2xl transition-all"
+                            title="Eliminar registro"
+                          >
+                            <Trash2 className="w-5 h-5" />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -428,6 +495,127 @@ export default function AdminPage() {
           </div>
         )}
       </div>
+
+      {editingParticipant && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="bg-[#0f172a] border border-white/10 rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 md:p-8 shadow-2xl animate-in zoom-in-95 duration-200">
+            <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/5">
+              <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                <Pencil className="text-blue-400 w-6 h-6" /> Editar Registro #{editingParticipant.id}
+              </h2>
+              <button 
+                onClick={() => setEditingParticipant(null)}
+                className="text-white/40 hover:text-white transition-colors text-lg"
+              >
+                ✕
+              </button>
+            </div>
+
+            <form onSubmit={handleUpdate} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-white/50 uppercase tracking-wider mb-2">Nombre</label>
+                  <input
+                    type="text"
+                    value={editForm.name}
+                    onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-white/50 uppercase tracking-wider mb-2">Apellido</label>
+                  <input
+                    type="text"
+                    value={editForm.surname}
+                    onChange={(e) => setEditForm({ ...editForm, surname: e.target.value })}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-white/50 uppercase tracking-wider mb-2">DNI</label>
+                  <input
+                    type="text"
+                    value={editForm.dni}
+                    onChange={(e) => setEditForm({ ...editForm, dni: e.target.value })}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-white/50 uppercase tracking-wider mb-2">Teléfono</label>
+                  <input
+                    type="text"
+                    value={editForm.phone}
+                    onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-xs font-semibold text-white/50 uppercase tracking-wider mb-2">Email</label>
+                  <input
+                    type="email"
+                    value={editForm.email}
+                    onChange={(e) => setEditForm({ ...editForm, email: e.target.value })}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-white/50 uppercase tracking-wider mb-2">N° Ticket</label>
+                  <input
+                    type="text"
+                    value={editForm.ticket}
+                    onChange={(e) => setEditForm({ ...editForm, ticket: e.target.value })}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-white/50 uppercase tracking-wider mb-2">Sucursal</label>
+                  <input
+                    type="text"
+                    value={editForm.branch}
+                    onChange={(e) => setEditForm({ ...editForm, branch: e.target.value })}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                    required
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-xs font-semibold text-white/50 uppercase tracking-wider mb-2">Importe (ej. 77.485,32)</label>
+                  <input
+                    type="text"
+                    value={editForm.amount}
+                    onChange={(e) => setEditForm({ ...editForm, amount: e.target.value })}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                  />
+                </div>
+              </div>
+
+              {saveError && (
+                <p className="text-red-400 text-sm text-center">{saveError}</p>
+              )}
+
+              <div className="flex justify-end gap-3 pt-4 border-t border-white/5">
+                <button
+                  type="button"
+                  onClick={() => setEditingParticipant(null)}
+                  className="px-5 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white font-medium transition-all"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  disabled={saving}
+                  className="px-5 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:opacity-90 text-white font-bold transition-all disabled:opacity-50 shadow-lg shadow-blue-500/20"
+                >
+                  {saving ? 'Guardando...' : 'Guardar Cambios'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
