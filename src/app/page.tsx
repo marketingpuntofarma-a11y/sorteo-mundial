@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Ticket, User, CreditCard, Phone, Mail, MapPin, Send, Loader2 } from 'lucide-react';
+import { Ticket, User, CreditCard, Phone, Mail, MapPin, Send, Loader2, Info, X } from 'lucide-react';
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
@@ -11,6 +11,7 @@ export default function Home() {
   const [chances, setChances] = useState<number>(0);
   const [currentChances, setCurrentChances] = useState<number>(0);
 
+  const [showPopup, setShowPopup] = useState(true);
   const [ticketValue, setTicketValue] = useState('');
 
   const handleTicketChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -326,6 +327,53 @@ export default function Home() {
           )}
         </div>
       </div>
+
+      {showPopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+          <div className="bg-[#0b1329] border border-white/10 p-6 md:p-8 rounded-[32px] w-full max-w-md shadow-2xl relative text-center overflow-hidden animate-in zoom-in-95 duration-200">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50"></div>
+            
+            <button 
+              onClick={() => setShowPopup(false)}
+              className="absolute top-4 right-4 text-white/40 hover:text-white transition-colors"
+              aria-label="Cerrar"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="inline-flex p-3 rounded-full bg-blue-500/10 border border-blue-500/25 mb-4 mt-2">
+              <Info className="w-8 h-8 text-blue-400" />
+            </div>
+
+            <h3 className="text-xl font-black uppercase tracking-tight text-white mb-3">
+              ¿Cómo participar?
+            </h3>
+            
+            <p className="text-sm text-blue-100/80 leading-relaxed mb-6 font-medium">
+              Con la compra de <span className="text-blue-400 font-bold">$50.000</span> pesos o más en un mismo ticket ya podés registrarte y estar participando del sorteo mundial.
+            </p>
+
+            <div className="space-y-4">
+              <button
+                type="button"
+                onClick={() => setShowPopup(false)}
+                className="w-full py-4 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-black rounded-2xl transition-all shadow-lg shadow-blue-500/20 active:scale-98 uppercase tracking-wider text-sm cursor-pointer"
+              >
+                Entendido
+              </button>
+
+              <div>
+                <Link 
+                  href="/bases" 
+                  className="text-xs text-blue-400 hover:text-blue-300 underline font-bold tracking-wide transition-colors"
+                >
+                  Ver Bases y Condiciones
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
