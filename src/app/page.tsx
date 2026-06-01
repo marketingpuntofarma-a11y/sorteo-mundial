@@ -341,8 +341,12 @@ export default function Home() {
               <X className="w-5 h-5" />
             </button>
 
-            <div className="inline-flex p-3 rounded-full bg-blue-500/10 border border-blue-500/25 mb-4 mt-2">
-              <Info className="w-8 h-8 text-blue-400" />
+            <div className="relative w-24 h-24 mx-auto mb-4 mt-2">
+              <img 
+                src="/pelota.png" 
+                alt="Pelota Sorteo" 
+                className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(59,130,246,0.5)] animate-pulse"
+              />
             </div>
 
             <h3 className="text-xl font-black uppercase tracking-tight text-white mb-3">
@@ -350,7 +354,10 @@ export default function Home() {
             </h3>
             
             <p className="text-sm text-blue-100/80 leading-relaxed mb-6 font-medium">
-              Con la compra de <span className="text-blue-400 font-bold">$50.000</span> pesos o más en un mismo ticket ya podés registrarte y estar participando del sorteo mundial.
+              Con la compra de <span className="text-blue-400 font-bold">$50.000</span> pesos o más en un mismo ticket ya podés participar del sorteo mundial. Revisa las{' '}
+              <Link href="/bases" className="text-blue-400 hover:text-blue-300 underline font-bold transition-colors">
+                Bases y condiciones
+              </Link>.
             </p>
 
             <div className="space-y-4">
