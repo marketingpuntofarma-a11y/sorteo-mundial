@@ -341,11 +341,11 @@ export default function Home() {
               <X className="w-5 h-5" />
             </button>
 
-            <div className="relative w-24 h-24 mx-auto mb-4 mt-2">
+            <div className="relative w-full max-w-[240px] h-24 mx-auto mb-4 mt-2">
               <img 
-                src="/pelota.png" 
-                alt="Pelota Sorteo" 
-                className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(59,130,246,0.5)] animate-pulse"
+                src="/puntitofarma_mundial.png" 
+                alt="Equipo Sorteo" 
+                className="w-full h-full object-contain"
               />
             </div>
 
@@ -368,15 +368,6 @@ export default function Home() {
               >
                 Entendido
               </button>
-
-              <div>
-                <Link 
-                  href="/bases" 
-                  className="text-xs text-blue-400 hover:text-blue-300 underline font-bold tracking-wide transition-colors"
-                >
-                  Ver Bases y Condiciones
-                </Link>
-              </div>
             </div>
           </div>
         </div>
