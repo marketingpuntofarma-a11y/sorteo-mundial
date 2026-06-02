@@ -37,6 +37,14 @@ export default function AdminPage() {
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState('');
 
+  const getAmountWord = (val: string) => {
+    const clean = val.replace(/\./g, '').split(',')[0];
+    const num = parseInt(clean, 10);
+    if (!num || isNaN(num)) return null;
+    if (num >= 1000000) return { text: 'MILLONES', color: 'text-amber-400 bg-amber-500/10 border-amber-500/25' };
+    if (num >= 1000) return { text: 'MIL', color: 'text-blue-400 bg-blue-500/10 border-blue-500/25' };
+    return null;
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -613,12 +621,23 @@ export default function AdminPage() {
                 </div>
                 <div className="md:col-span-2">
                   <label className="block text-xs font-semibold text-white/50 uppercase tracking-wider mb-2">Importe (ej. 77.485,32)</label>
-                  <input
-                    type="text"
-                    value={editForm.amount}
-                    onChange={(e) => setEditForm({ ...editForm, amount: e.target.value })}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all"
-                  />
+                  <div className="relative group">
+                    <input
+                      type="text"
+                      value={editForm.amount}
+                      onChange={(e) => setEditForm({ ...editForm, amount: e.target.value })}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl pl-4 pr-24 py-3 text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                    />
+                    {(() => {
+                      const badge = getAmountWord(editForm.amount);
+                      if (!badge) return null;
+                      return (
+                        <span className={`absolute right-4 top-1/2 -translate-y-1/2 text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded border pointer-events-none select-none ${badge.color}`}>
+                          {badge.text}
+                        </span>
+                      );
+                    })()}
+                  </div>
                 </div>
               </div>
 

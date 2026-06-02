@@ -38,6 +38,15 @@ export default function Home() {
     setAmountValue(formatNumber(e.target.value));
   };
 
+  const getAmountWord = (val: string) => {
+    const clean = val.replace(/\./g, '').split(',')[0];
+    const num = parseInt(clean, 10);
+    if (!num || isNaN(num)) return null;
+    if (num >= 1000000) return { text: 'MILLONES', color: 'text-amber-400 bg-amber-500/10 border-amber-500/25' };
+    if (num >= 1000) return { text: 'MIL', color: 'text-blue-400 bg-blue-500/10 border-blue-500/25' };
+    return null;
+  };
+
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, '');
     setPhoneValue(value);
@@ -296,8 +305,17 @@ export default function Home() {
                     value={amountValue}
                     onChange={handleAmountChange}
                     placeholder="Ej: 150.000" 
-                    className="w-full bg-white/[0.02] border border-white/10 rounded-xl px-12 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-white/20" 
+                    className="w-full bg-white/[0.02] border border-white/10 rounded-xl pl-12 pr-28 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-white/20" 
                   />
+                  {(() => {
+                    const badge = getAmountWord(amountValue);
+                    if (!badge) return null;
+                    return (
+                      <span className={`absolute right-4 top-1/2 -translate-y-1/2 text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded border pointer-events-none select-none ${badge.color}`}>
+                        {badge.text}
+                      </span>
+                    );
+                  })()}
                 </div>
               </div>
 
