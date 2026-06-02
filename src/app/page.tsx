@@ -304,7 +304,7 @@ export default function Home() {
                     type="text" 
                     value={amountValue}
                     onChange={handleAmountChange}
-                    placeholder="Ej: 150.000" 
+                    placeholder="Ej: 50.000" 
                     className="w-full bg-white/[0.02] border border-white/10 rounded-xl pl-12 pr-28 py-4 text-white outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-white/20" 
                   />
                   {(() => {
