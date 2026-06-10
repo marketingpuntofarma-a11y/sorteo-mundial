@@ -25,17 +25,62 @@ export default function Home() {
   const [amountValue, setAmountValue] = useState('');
   const [phoneValue, setPhoneValue] = useState('');
 
-  const formatNumber = (val: string) => {
-    let value = val.replace(/[^\d,]/g, '');
-    const parts = value.split(',');
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    if (parts.length > 2) value = parts[0] + ',' + parts[1];
-    else value = parts.join(',');
-    return value;
+  const formatNumber = (val: string, prevVal: string) => {
+    const prevDots = (prevVal.match(/\./g) || []).length;
+    const prevCommas = (prevVal.match(/,/g) || []).length;
+    const prevSeparators = prevDots + prevCommas;
+
+    const currentDots = (val.match(/\./g) || []).length;
+    const currentCommas = (val.match(/,/g) || []).length;
+    const currentSeparators = currentDots + currentCommas;
+
+    let clean = val;
+
+    if (currentSeparators > prevSeparators) {
+      if (prevCommas === 0) {
+        const lastChar = val.slice(-1);
+        if (lastChar === '.' || lastChar === ',') {
+          const cleanBefore = val.slice(0, -1).replace(/\./g, '');
+          clean = cleanBefore + ',';
+        } else {
+          let targetIndex = val.lastIndexOf(',');
+          if (targetIndex === -1) {
+            targetIndex = val.lastIndexOf('.');
+          }
+          if (targetIndex !== -1) {
+            clean = val.substring(0, targetIndex).replace(/\./g, '') + ',' + val.substring(targetIndex + 1).replace(/\./g, '');
+          }
+        }
+      } else {
+        const firstCommaIndex = val.indexOf(',');
+        const before = val.substring(0, firstCommaIndex).replace(/\./g, '');
+        const after = val.substring(firstCommaIndex + 1).replace(/[\.,]/g, '');
+        clean = before + ',' + after;
+      }
+    } else {
+      if (val.includes(',')) {
+        const commaIndex = val.indexOf(',');
+        const before = val.substring(0, commaIndex).replace(/\./g, '');
+        const after = val.substring(commaIndex + 1).replace(/[\.,]/g, '');
+        clean = before + ',' + after;
+      } else {
+        clean = val.replace(/\./g, '');
+      }
+    }
+
+    clean = clean.replace(/[^\d,]/g, '');
+
+    const parts = clean.split(',');
+    const partEntera = parts[0];
+    const partDecimal = parts[1] !== undefined ? parts[1].slice(0, 2) : undefined;
+
+    const integerFormatted = partEntera.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+    return partDecimal !== undefined ? integerFormatted + ',' + partDecimal : integerFormatted;
   };
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAmountValue(formatNumber(e.target.value));
+    setAmountValue(formatNumber(e.target.value, amountValue));
   };
 
   const getAmountWord = (val: string) => {
