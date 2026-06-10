@@ -284,84 +284,92 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0f172a] text-white p-4 md:p-8">
+    <div className={`min-h-screen transition-colors duration-300 p-4 md:p-8 relative ${activeTab === 'sorteo' ? 'bg-slate-50 text-slate-800' : 'bg-[#0f172a] text-white'}`}>
+      {activeTab === 'sorteo' && (
+        <div className="absolute top-6 left-6 md:top-8 md:left-8 z-50">
+          <button 
+            onClick={() => setActiveTab('participants')}
+            className="flex items-center gap-2 bg-white hover:bg-slate-100 text-slate-700 px-5 py-3 rounded-2xl transition-all font-bold text-sm shadow-sm border border-slate-200"
+          >
+            ← Volver a Participantes
+          </button>
+        </div>
+      )}
       <div className="max-w-7xl mx-auto">
-        <header className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 bg-white/5 p-6 rounded-3xl border border-white/10">
-          <div>
-            <h1 className="text-3xl font-bold text-white flex items-center gap-3">
-              <div className="p-2 bg-blue-500/20 rounded-xl">
-                <Users className="text-blue-400 w-8 h-8" />
-              </div>
-              Panel de Administración
-            </h1>
-            <div className="flex flex-wrap items-center gap-4 mt-4">
-              <div className="flex gap-4">
-                <button 
-                  onClick={() => setActiveTab('participants')}
-                  className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === 'participants' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30' : 'bg-white/5 text-white/50 hover:bg-white/10'}`}
-                >
-                  Participantes
-                </button>
-                <button 
-                  onClick={() => setActiveTab('sorteo')}
-                  className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === 'sorteo' ? 'bg-purple-600 text-white shadow-lg shadow-purple-500/30' : 'bg-white/5 text-white/50 hover:bg-white/10'}`}
-                >
-                  Realizar Sorteo
-                </button>
-              </div>
+        {activeTab === 'participants' && (
+          <header className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 bg-white/5 p-6 rounded-3xl border border-white/10">
+            <div>
+              <h1 className="text-3xl font-bold text-white flex items-center gap-3">
+                <div className="p-2 bg-blue-500/20 rounded-xl">
+                  <Users className="text-blue-400 w-8 h-8" />
+                </div>
+                Panel de Administración
+              </h1>
+              <div className="flex flex-wrap items-center gap-4 mt-4">
+                <div className="flex gap-4">
+                  <button 
+                    onClick={() => setActiveTab('participants')}
+                    className="px-4 py-2 rounded-lg text-sm font-bold transition-all bg-blue-600 text-white shadow-lg shadow-blue-500/30"
+                  >
+                    Participantes
+                  </button>
+                  <button 
+                    onClick={() => setActiveTab('sorteo')}
+                    className="px-4 py-2 rounded-lg text-sm font-bold transition-all bg-white/5 text-white/50 hover:bg-white/10"
+                  >
+                    Realizar Sorteo
+                  </button>
+                </div>
 
-              {/* Estadísticas de conteo */}
-              <div className="flex items-center gap-4 text-xs font-semibold text-white/60 bg-white/5 border border-white/10 px-4 py-2.5 rounded-xl">
-                <div>
-                  Tickets: <span className="font-bold text-blue-400 font-mono text-sm ml-1">{stats.ticketsCount}</span>
-                </div>
-                <div className="w-[1px] h-4 bg-white/10"></div>
-                <div>
-                  Participantes: <span className="font-bold text-purple-400 font-mono text-sm ml-1">{stats.participantsCount}</span>
-                </div>
-                <div className="w-[1px] h-4 bg-white/10"></div>
-                <div>
-                  Chances Totales: <span className="font-bold text-green-400 font-mono text-sm ml-1">{stats.totalChances}</span>
+                {/* Estadísticas de conteo */}
+                <div className="flex items-center gap-4 text-xs font-semibold text-white/60 bg-white/5 border border-white/10 px-4 py-2.5 rounded-xl">
+                  <div>
+                    Tickets: <span className="font-bold text-blue-400 font-mono text-sm ml-1">{stats.ticketsCount}</span>
+                  </div>
+                  <div className="w-[1px] h-4 bg-white/10"></div>
+                  <div>
+                    Participantes: <span className="font-bold text-purple-400 font-mono text-sm ml-1">{stats.participantsCount}</span>
+                  </div>
+                  <div className="w-[1px] h-4 bg-white/10"></div>
+                  <div>
+                    Chances Totales: <span className="font-bold text-green-400 font-mono text-sm ml-1">{stats.totalChances}</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="flex flex-wrap items-center gap-3">
-            {activeTab === 'participants' && (
-              <>
-                <div className="relative group min-w-[280px]">
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-blue-400 transition-colors w-4 h-4" />
-                  <input 
-                    type="text"
-                    placeholder="Buscar..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl pl-11 pr-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
-                  />
-                </div>
-                <button 
-                  onClick={handleExport}
-                  className="flex items-center gap-2 bg-green-500/10 text-green-400 px-5 py-3 rounded-xl hover:bg-green-500/20 transition-all border border-green-500/20 font-bold"
-                >
-                  <Download className="w-5 h-5" /> Exportar
-                </button>
-                <button 
-                  onClick={fetchParticipants}
-                  className="p-3 bg-white/5 hover:bg-white/10 rounded-xl transition-all border border-white/10"
-                  title="Refrescar"
-                >
-                  <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
-                </button>
-              </>
-            )}
-            <button 
-              onClick={() => setIsLoggedIn(false)}
-              className="flex items-center gap-2 bg-red-500/10 text-red-400 px-5 py-3 rounded-xl hover:bg-red-500/20 transition-all border border-red-500/20"
-            >
-              <LogOut className="w-5 h-5" /> Salir
-            </button>
-          </div>
-        </header>
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="relative group min-w-[280px]">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-blue-400 transition-colors w-4 h-4" />
+                <input 
+                  type="text"
+                  placeholder="Buscar..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full bg-white/5 border border-white/10 rounded-xl pl-11 pr-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
+                />
+              </div>
+              <button 
+                onClick={handleExport}
+                className="flex items-center gap-2 bg-green-500/10 text-green-400 px-5 py-3 rounded-xl hover:bg-green-500/20 transition-all border border-green-500/20 font-bold"
+              >
+                <Download className="w-5 h-5" /> Exportar
+              </button>
+              <button 
+                onClick={fetchParticipants}
+                className="p-3 bg-white/5 hover:bg-white/10 rounded-xl transition-all border border-white/10"
+                title="Refrescar"
+              >
+                <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
+              </button>
+              <button 
+                onClick={() => setIsLoggedIn(false)}
+                className="flex items-center gap-2 bg-red-500/10 text-red-400 px-5 py-3 rounded-xl hover:bg-red-500/20 transition-all border border-red-500/20"
+              >
+                <LogOut className="w-5 h-5" /> Salir
+              </button>
+            </div>
+          </header>
+        )}
 
         {activeTab === 'participants' ? (
           <div className="bg-white/5 rounded-3xl border border-white/10 overflow-hidden shadow-2xl">
@@ -453,22 +461,22 @@ export default function AdminPage() {
               {winners.length === 0 && !sorteoLoading && (
                 <div className="space-y-8 animate-in fade-in duration-700">
                   <div className="inline-flex p-4 rounded-3xl bg-purple-500/10 border border-purple-500/20 mb-4">
-                    <Trophy className="w-16 h-16 text-purple-400" />
+                    <Trophy className="w-16 h-16 text-purple-600" />
                   </div>
-                  <h2 className="text-4xl md:text-5xl font-black italic tracking-tighter text-white mb-4 uppercase">
-                    Gran Sorteo <span className="text-blue-400">PFM</span>
+                  <h2 className="text-4xl md:text-5xl font-black italic tracking-tighter text-slate-950 mb-4 uppercase">
+                    Gran Sorteo <span className="text-blue-600">PFM</span>
                   </h2>
-                  <p className="text-white/50 mb-10 text-lg">
+                  <p className="text-slate-600 mb-10 text-lg">
                     El sistema seleccionará 3 ganadores distintos de forma aleatoria,<br />
                     ponderando las chances acumuladas por cada DNI (ticket a ticket).
                   </p>
                   <button
                     onClick={handleSorteo}
-                    className="group relative inline-flex items-center justify-center px-12 py-6 text-2xl font-bold tracking-tighter text-white bg-white/5 border-2 border-white/10 rounded-full hover:bg-white/10 hover:border-white/20 transition-all duration-300"
+                    className="group relative inline-flex items-center justify-center px-12 py-6 text-2xl font-bold tracking-tighter text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 rounded-full hover:scale-[1.03] transition-all duration-300 shadow-xl shadow-blue-500/20"
                   >
-                    <Sparkles className="w-6 h-6 mr-3 text-purple-400 group-hover:animate-spin" />
+                    <Sparkles className="w-6 h-6 mr-3 text-purple-300 group-hover:animate-spin" />
                     INICIAR SORTEO
-                    <Sparkles className="w-6 h-6 ml-3 text-indigo-400 group-hover:animate-spin" />
+                    <Sparkles className="w-6 h-6 ml-3 text-indigo-300 group-hover:animate-spin" />
                   </button>
                 </div>
               )}
@@ -476,26 +484,26 @@ export default function AdminPage() {
               {sorteoLoading && (
                 <div className="flex flex-col items-center justify-center space-y-8">
                   <div className="relative w-32 h-32">
-                    <div className="absolute inset-0 rounded-full border-t-4 border-purple-500 animate-spin"></div>
-                    <div className="absolute inset-2 rounded-full border-r-4 border-indigo-500 animate-spin"></div>
+                    <div className="absolute inset-0 rounded-full border-t-4 border-purple-600 animate-spin"></div>
+                    <div className="absolute inset-2 rounded-full border-r-4 border-indigo-600 animate-spin"></div>
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <Trophy className="w-10 h-10 text-white/50 animate-pulse" />
+                      <Trophy className="w-10 h-10 text-slate-500/70 animate-pulse" />
                     </div>
                   </div>
-                  <p className="text-2xl font-bold text-white/80 animate-pulse tracking-widest uppercase">Mezclando bolillas...</p>
+                  <p className="text-2xl font-bold text-slate-800 animate-pulse tracking-widest uppercase">Mezclando bolillas...</p>
                 </div>
               )}
 
               {winners.length > 0 && !sorteoLoading && (
                 <div className="animate-in zoom-in duration-500 fade-in slide-in-from-bottom-10 w-full space-y-12">
                   <div className="text-center">
-                    <h2 className="text-4xl font-black italic text-blue-400 uppercase tracking-tighter mb-2">¡RESULTADOS DEL SORTEO!</h2>
-                    <p className="text-white/40 uppercase tracking-widest text-sm">Se han seleccionado 3 ganadores distintos</p>
+                    <h2 className="text-4xl font-black italic text-blue-600 uppercase tracking-tighter mb-2">¡RESULTADOS DEL SORTEO!</h2>
+                    <p className="text-slate-500 uppercase tracking-widest text-sm">Se han seleccionado 3 ganadores distintos</p>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mx-auto">
                     {winners.map((w, idx) => (
-                      <div key={idx} className="bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-2xl border border-white/20 p-6 rounded-[2.5rem] shadow-2xl relative overflow-hidden group hover:border-blue-500/50 transition-all flex flex-col items-center text-center">
+                      <div key={idx} className="bg-white border border-slate-200/60 p-6 rounded-[2.5rem] shadow-xl relative overflow-hidden group hover:border-blue-500/50 hover:shadow-blue-500/10 transition-all flex flex-col items-center text-center">
                         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50"></div>
                         
                         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-tr from-yellow-400 to-amber-600 mb-6 shadow-xl shadow-yellow-500/20">
@@ -503,16 +511,16 @@ export default function AdminPage() {
                         </div>
 
                         <div className="flex-grow">
-                          <h4 className="text-blue-400 font-black italic tracking-tighter text-sm uppercase mb-1">
+                          <h4 className="text-blue-600 font-black italic tracking-tighter text-sm uppercase mb-1">
                             {w.prize}
                           </h4>
-                          <h3 className="text-2xl md:text-3xl font-black italic text-white mb-6 tracking-tighter uppercase leading-tight h-16 flex items-center justify-center">
+                          <h3 className="text-2xl md:text-3xl font-black italic text-slate-800 mb-6 tracking-tighter uppercase leading-tight h-16 flex items-center justify-center">
                             {w.name} {w.surname}
                           </h3>
                           
-                          <div className="bg-black/40 rounded-xl p-3 border border-white/5 mb-6">
-                            <p className="text-white/40 text-[8px] font-bold uppercase tracking-[0.2em] mb-1">DNI del Ganador</p>
-                            <p className="font-mono text-xl font-black tracking-widest text-white">
+                          <div className="bg-slate-100 rounded-xl p-3 border border-slate-200/60 mb-6">
+                            <p className="text-slate-500 text-[8px] font-bold uppercase tracking-[0.2em] mb-1">DNI del Ganador</p>
+                            <p className="font-mono text-xl font-black tracking-widest text-slate-800">
                               ****{w.dni?.toString().slice(-4)}
                             </p>
                           </div>
@@ -523,7 +531,7 @@ export default function AdminPage() {
 
                   <button
                     onClick={() => setWinners([])}
-                    className="mt-8 px-10 py-5 bg-white/5 hover:bg-white/10 border border-white/10 transition-all rounded-full font-bold text-white/70 hover:text-white uppercase tracking-widest text-sm"
+                    className="mt-8 px-10 py-5 bg-slate-100 hover:bg-slate-200 border border-slate-200 transition-all rounded-full font-bold text-slate-600 hover:text-slate-800 uppercase tracking-widest text-sm shadow-sm"
                   >
                     Realizar nuevo sorteo
                   </button>
